@@ -18,11 +18,12 @@ class Login extends Component {
 
     loginHandler = event => {
         event.preventDefault();
-        const loginCredentials = {
+        const loginInfo = {
             username: this.state.username,
             password: this.state.password
         };
-        this.props.onAuthLogin(loginCredentials);
+        this.props.onAuthLogin(loginInfo);
+       
     };
 
     onUsernameChange = (event) =>{
@@ -76,15 +77,15 @@ class Login extends Component {
 
         return (
             <Aux>
-                {this.props.isAuth ? (
-                    <Redirect to={this.props.loginRedirectURL} />
-                ) : null}
                 <div>
                     {this.props.isAuth ? (
                         <Redirect to={this.props.loginRedirectURL} />
                     ) : null}
+
                     {this.props.loading ? (
-                        <Spinner />
+                        
+                        <Redirect to={this.props.loginRedirectURL} />
+                       
                     ) : (
                         <div className='col-md-6 login-form'>{form}</div>
                     )}
@@ -104,8 +105,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthLogin: loginCredentials =>
-            dispatch(actions.login(loginCredentials))
+        onAuthLogin: (loginInfo)=>
+            dispatch(actions.login(loginInfo))
     };
 };
 

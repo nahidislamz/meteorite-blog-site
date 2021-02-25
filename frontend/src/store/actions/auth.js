@@ -30,11 +30,12 @@ export const logout = () => {
     };
 };
 
-export const login = loginCredentials => {
+export const login = (loginCredentials) => {
     return dispatch => {
         dispatch(loginInit());
         AxiosInstance.post("auth/login/", loginCredentials)
             .then(response => {
+                
                 const expirationDate = new Date(
                     new Date().getTime() + 3600 * 1000
                 );
@@ -47,6 +48,7 @@ export const login = loginCredentials => {
                         response.data.user.username
                     )
                 );
+               
             })
             .catch(error => {
                 dispatch(loginFail(error));

@@ -5,6 +5,8 @@ import * as actions from "../../store/actions/index";
 import Spinner from "../ui/spinner";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/login.css"
+
+
 class SignUp extends Component {
 
     constructor(props){

@@ -24,6 +24,13 @@ class PostDetailView(generics.RetrieveAPIView):
 
 
 
+@api_view(['GET'])
+def tags_list_view(request, slug):
+    post_instance = get_object_or_404(Post, slug=slug)
+    tag_list = Tag.objects.filter(
+        post=post_instance)
+    serializer = TagsSerializer(tag_list, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def comment_list_view(request, slug):

@@ -9,13 +9,19 @@ from .utils import unique_slug_generator
 
 User = get_user_model()
 
+class Tag(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
-
+    
     title = models.CharField(max_length=100)
     body = models.TextField()
+    tags = models.ManyToManyField(Tag, null=True, blank=True)
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts', related_query_name='post')
+        User, on_delete=models.CASCADE, related_name='posts', related_query_name='post')   
     slug = models.SlugField(blank=True, null=True)
     is_published = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -24,6 +30,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    @property
+    def tags_list(self):
+        return self.tags.all()
 
     @property
     def comments_list(self):
@@ -77,3 +87,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Post - "{self.post.title}", Body - "{self.body}"'
+
+

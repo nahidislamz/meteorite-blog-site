@@ -21,7 +21,7 @@
 .btnSubmit
 {
     width: 100%;
-    border: 1px solid #ad1414;
+    border: 1px solid #8f406e;
     border-radius: 2rem;
     padding: 1.5%;
    
@@ -29,12 +29,12 @@
 }
 .login-form .btnSubmit{
     font-weight: 600;
-    color: #ad1414;
+    color: #8f406e;
     background-color: #ffffff;
 }
 
 .login-form .ForgetPwd{
-    color: #ad1414;
+    color: #8f406e;
     font-weight: 600;
     text-decoration: none;
 }
