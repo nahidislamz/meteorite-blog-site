@@ -1,17 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
 
 const Search = props => {
 
     return (
-        <div class="card my-4">
-            <h5 class="card-header">Search</h5>
-            <div class="card-body">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..."/>
-                    <span class="input-group-append">
-                        <button class="btn btn-sm btn-secondary" type="button">Go!</button>
+        <div className="card my-4">
+            <h5 className="card-header">Search</h5>
+            <div className="card-body">
+                <div className="input-group">
+                    <input type="text" className="form-control m-0 border" placeholder="Search for..."/>
+                    <span className="input-group-append">
+                        <button className="btn btn-md btn-secondary m-0" type="button">Go!</button>
                     </span>
                 </div>
             </div>

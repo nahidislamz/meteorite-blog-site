@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
 import * as actions from "../../store/actions/index";
-import Spinner from "../ui/spinner";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/login.css"
 class Login extends Component {
@@ -13,7 +12,6 @@ class Login extends Component {
             username:"",
             password:"",
         }
-        
     }
 
     loginHandler = event => {
@@ -37,13 +35,6 @@ class Login extends Component {
         })
     }
     render() {
-        let formElements = [];
-        for (let key in this.state.loginForm) {
-            formElements.push({
-                id: key,
-                config: this.state.loginForm[key]
-            });
-        }
 
         let form = (
             <Aux>

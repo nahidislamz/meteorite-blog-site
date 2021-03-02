@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions/index";
-import Spinner from "../ui/spinner";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/login.css"
 
@@ -72,7 +71,7 @@ class SignUp extends Component {
             <Aux>
                 <div>   
                     {this.props.loading ? (
-                        <Spinner />
+                      <p className="text-center mt-5">Loading...</p>
                     ) : (
                         <div className='col-md-6 login-form'>
                             <h1 className="text-center mb-4"

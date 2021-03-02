@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from .models import UserProfile
 from blog.models import Post
+from blog.serializers import *
 
 User = get_user_model()
 
@@ -57,19 +58,14 @@ class UserStatus(serializers.ModelSerializer):
 
 
 
-
-
 class PostCreateSerializer(serializers.ModelSerializer):
-    """Serializer For Creating A Post For Logged In Users"""
-
+    #tags_list = TagsSerializer(many=True)
     class Meta:
         model = Post
-        fields = ('title', 'body', 'short_description', 'author')
+        fields = ('title','thumbnail','body','tags', 'author','is_published')
 
 
 class PostListSerializer(serializers.ModelSerializer):
-    """Serializer For Listing Only Relevant Information
-    Of Posts Of A Particular User"""
 
     total_comments = serializers.IntegerField()
 
@@ -79,8 +75,7 @@ class PostListSerializer(serializers.ModelSerializer):
                   'total_comments', 'created_on')
 
 class PostUpdateSerializer(serializers.ModelSerializer):
-    """Serializer For Creating A Post For Logged In Users"""
 
     class Meta:
         model = Post
-        fields = ('title', 'body', 'short_description')
+        fields = ('title','thumbnail', 'body')

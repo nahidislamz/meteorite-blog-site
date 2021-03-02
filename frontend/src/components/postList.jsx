@@ -9,6 +9,7 @@ const posts = props => {
                 key={post.slug}
                 slug={post.slug}
                 title={post.title}
+                thumbnail={post.thumbnail}
                 datePublished={post.published_on}
                 totalComments={post.total_comments}
                 author={post.author_full_name}

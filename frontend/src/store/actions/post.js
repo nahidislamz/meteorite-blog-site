@@ -22,13 +22,12 @@ export const sendNewPostToServerFail = () => {
 export const sendNewPostToServer = (postData, config) => {
     return dispatch => {
         dispatch(sendNewPostToServerInit());
-        AxiosInstance.post("accounts/create-new-post/", postData, config)
+        AxiosInstance.post("accounts/new-post/", postData, config)
             .then(response => {
                 alert("Post Submitted Successfully");
                 dispatch(sendNewPostToServerSuccess());
             })
             .catch(error => {
-                // alert(error.);
                 console.log(error.response.data);
                 dispatch(sendNewPostToServerFail());
             });
@@ -58,7 +57,7 @@ export const listPostsToUserDashboardFail = error => {
 export const listPostsToUserDashboard = config => {
     return dispatch => {
         dispatch(listPostsToUserDashboardInit());
-        AxiosInstance.get("/accounts/post-list", config)
+        AxiosInstance.get("/accounts/post-list/", config)
             .then(response => {
                 dispatch(listPostsToUserDashboardSuccess(response.data));
             })
@@ -67,4 +66,4 @@ export const listPostsToUserDashboard = config => {
                 dispatch(listPostsToUserDashboardFail());
             });
     };
-};
+};  

@@ -24,7 +24,7 @@ export const userProfileViewFail = error => {
 export const userProfileView = config => {
     return dispatch => {
         dispatch(userProfileViewInit());
-        AxiosInstance.get("/accounts/profile", config)
+        AxiosInstance.get("/accounts/profile/", config)
             .then(response => dispatch(userProfileViewSuccess(response.data)))
             .catch(error => userProfileViewFail(error));
     };

@@ -3,11 +3,15 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from .utils import unique_slug_generator
 
 
 User = get_user_model()
+
+def upload_to(instance, filename):
+    return 'posts/{filename}'.format(filename=filename)
 
 class Tag(models.Model):
     name = models.CharField(max_length=200)
@@ -17,7 +21,9 @@ class Tag(models.Model):
 
 class Post(models.Model):
     
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    thumbnail = models.ImageField(
+        _("Thumbnail"), upload_to=upload_to, default='posts/default.jpg')
     body = models.TextField()
     tags = models.ManyToManyField(Tag, null=True, blank=True)
     author = models.ForeignKey(
@@ -76,9 +82,7 @@ def update_published_on(sender, instance, **kwargs):
 
 class Comment(models.Model):
 
-    name = models.CharField(max_length=100)
-    email = models.EmailField()
-    website = models.URLField(blank=True, null=True)
+    author = models.ForeignKey(User,default=True, on_delete=models.CASCADE, related_name='comments', related_query_name='comment')
     body = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE,
                              related_name='comments', related_query_name='comment')
@@ -88,4 +92,9 @@ class Comment(models.Model):
     def __str__(self):
         return f'Post - "{self.post.title}", Body - "{self.body}"'
 
-
+    @property
+    def author_full_name(self):
+        try:
+            return f'{self.author.first_name} {self.author.last_name}'
+        except:
+            return "Name Not Set"

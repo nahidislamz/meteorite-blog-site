@@ -21,10 +21,10 @@ export const createCommentFail = error => {
     };
 };
 
-export const createComment = (data, slug, refreshFunction) => {
+export const createComment = (data, slug,config,refreshFunction) => {
     return dispatch => {
         dispatch(createCommentInit());
-        AxiosInstance.post("/blog/comment/" + slug + "/", data)
+        AxiosInstance.post("/blog/comment/" + slug + "/", data,config)
             .then(response => {
                 alert("Comment Added Successfully");
                 dispatch(createCommentSuccess());

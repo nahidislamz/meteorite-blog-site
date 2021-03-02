@@ -1,39 +1,50 @@
 // Post List For Homepage
 import React, { Component } from "react";
 import AxiosInstance from "../../AxiosInstance";
-import Spinner from "../ui/spinner";
 import Post from "../postList"
 import Search from "./search"
 import Categories from "./category"
 import Widgets from "./widget"
 class Home extends Component {
     state = {
-        posts: null,
-        loading: true
+        posts: [],
+        loading: true,
+        tags: [],
+    };    
+    getTagsList = () => {
+        AxiosInstance.get("blog/tags-list/")
+            .then(response => {
+                this.setState({ tags: response.data });
+            })
+            .catch(error => {
+                alert(error,"Error Loading tags. Try Again..!!");
+            });
     };
-
+    componentDidMount() {
+        this.getTagsList()
+    }
     componentWillMount() {
         AxiosInstance.get("blog/")
-            .then(response =>
-                this.setState({ posts: response.data, loading: false })
-            )
+            .then(response =>{
+                this.setState({ posts: response.data, loading: false });
+            })
             .catch(err => console.log("Error From Home.js", err));
     }
 
     render() {
 
-        let postList = <Spinner />;
+        let postList = <p className="text-center mt-5">Loading...</p>;
+
         if (!this.state.loading && this.state.posts) {
             postList = <Post postList={this.state.posts} />
-            console.log(postList)
-
+          
         }
         return (
             <div className='container mt-4'>
                 <div className="row">
                     {/*1st column*/ }
                     <div className="col-md-8">
-                        <h3 className="my-5">Latest Post</h3>
+                        <h3 className="my-5 pt-5">Latest Post</h3>
                             {postList}
                         <ul className="pagination justify-content-center mb-4">
                             <li className="page-item">
@@ -51,11 +62,10 @@ class Home extends Component {
                         </ul>
                     </div>
                     {/* 2nd column */}
-                    <div class="col-md-4 mt-5 pt-5">
+                    <div className="col-md-4 mt-5 pt-5">
                         <Search/>
-                        <Categories/>
-                        <Widgets/>
-                        <Widgets/>
+                        <Categories tagsList={this.state.tags}/>
+                        <Widgets postList={this.state.posts} title="Popular Posts"/>
                     </div>
 
                 </div>

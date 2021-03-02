@@ -1,35 +1,29 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import AxiosInstance from "../../AxiosInstance";
-import Spinner from "../ui/spinner";
 import Aux from "../../hoc/Aux/Aux";
 import Tags from "././tags"
+import Comments from "../comments/commentsList"
+import CommentForm from "../comments/createComment"
 
+import * as actions from "../../store/actions/index"
 class PostDetails extends Component {
     state = {
         loading: true,
-        postBody: null,
-        comments: null,
-        tags:null
+        postBody: [],
+        comments: [],
+        tags:[]
     };
 
     getPostBody = () => {
-        AxiosInstance.get("blog/details_view/" + this.props.match.params.slug)
+        AxiosInstance.get("blog/details_view/" + this.props.match.params.slug +"/")
             .then(response =>
                 this.setState({ loading: false, postBody: response.data })
             )
             .catch(err => console.log("Error From PostDetail.js", err));
     };
 
-    getCommentsList = () => {
-        AxiosInstance.get("comments/" + this.props.match.params.slug + "/")
-            .then(response => {
-                this.setState({ comments: response.data });
-            })
-            .catch(error => {
-                alert("Error Loading Comments. Try Again..!!");
-            });
-    };
     getTagsList = () => {
         AxiosInstance.get("blog/tags/" + this.props.match.params.slug + "/")
             .then(response => {
@@ -39,10 +33,20 @@ class PostDetails extends Component {
                 alert("Error Loading Comments. Try Again..!!");
             });
     };
-
+    getCommentsList = () => {
+        AxiosInstance.get("blog/comments/" + this.props.match.params.slug + "/")
+            .then(response => {
+                this.setState({ comments: response.data });
+                console.log(response.data)
+            })
+            .catch(error => {
+                alert("Error Loading Comments. Try Again..!!");
+            });
+    };
     renderWholePage = () => {
         this.getPostBody();
         this.getTagsList();
+        this.getCommentsList();
       
     };
     componentDidMount() {
@@ -50,15 +54,15 @@ class PostDetails extends Component {
     }
 
     render() {
-        let postBody = <Spinner />;
+        let postBody = <p className="text-center mt-5">Loading...</p>;
         if (!this.state.loading && this.state.postBody) {
             postBody = (
                 <Aux>
-                    <div className="container mt-5">
+                    <div className="container mt-5 pt-5">
                         <div className="row">
                             <div className="col-lg-8">
-                                <h1 class="mt-4">{this.state.postBody.title}</h1>
-                                <p class="lead">
+                                <h1 className="mt-4">{this.state.postBody.title}</h1>
+                                <p className="lead">
                                     Atuhor : <Link to="/"> {this.state.postBody.author_full_name}</Link>
                                 </p>
                                 <p className="text"><b>Posted On</b> {new Date(
@@ -70,7 +74,7 @@ class PostDetails extends Component {
                                 <hr/>
                                 
 
-                                <img class="img-fluid rounded" src={"http://placehold.it/900x300"} alt=""/>
+                                <img className="img-fluid rounded" src={this.state.postBody.thumbnail} alt=""/>
                                 <hr/>
                                 <p className="lead">
                                     {this.state.postBody.body}
@@ -80,26 +84,14 @@ class PostDetails extends Component {
                                 <h3 className="h3-responsive">
                                     Comments: {this.state.postBody.total_comments}
                                 </h3>
-
-                                <div class="card my-4">
-                                    <h5 class="card-header">Leave a Comment:</h5>
-                                    <div class="card-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <textarea class="form-control" rows="3"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <div class="media mb-4">
-                                    <img class="d-flex mr-3 rounded-circle" src={"http://placehold.it/50x50" }alt=""/>
-                                    <div class="media-body">
-                                        <h5 class="mt-0">Commenter Name</h5>
-                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                    </div>
-                                </div>
+                                {
+                                    this.props.isAuth
+                                    ?
+                                    <CommentForm slug={this.props.match.params.slug} refresh={this.renderWholePage} />
+                                    : <p className="text-dark">Please <a href="/login">Login</a>/<a href="/signup">Signup</a> to comment in this post</p>
+                                }
+                               
+                                <Comments commentsList={this.state.comments}/>
 
                             </div>
                         </div>
@@ -112,5 +104,24 @@ class PostDetails extends Component {
         return postBody;
     }
 }
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.token !== null,
+        isUserProfile: state.user.userProfile !== null
+    };
+};
 
-export default PostDetails;
+const mapDispatchToProps = dispatch => {
+    return {
+        onCheckAuthStatus: () => dispatch(actions.loginCheckState())
+    };
+};
+
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(PostDetails)
+);
+
+

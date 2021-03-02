@@ -7,20 +7,20 @@ class TagsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ['name',]
+        fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
-
+    author_full_name = serializers.CharField()
     class Meta:
         model = Comment
-        fields = ['name', 'website', 'body', 'published_on']
+        fields = ['author_full_name', 'body', 'published_on']
 
 
 class CommentCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['name', 'website', 'body', 'post', 'email']
+        fields = ['author', 'body', 'post']
 
 
 
@@ -32,7 +32,7 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['slug', 'title','total_comments', 'author_full_name', 'published_on']
+        fields = ['slug', 'title','thumbnail','total_comments', 'author_full_name', 'published_on']
 
 
 class PostDetailSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class PostDetailSerializer(serializers.ModelSerializer):
     tags_list = TagsSerializer(many=True)
     class Meta:
         model = Post
-        fields = ['slug', 'title', 'body','tags_list', 'author_full_name',
+        fields = ['slug', 'title','thumbnail', 'body','tags_list', 'author_full_name',
                   'published_on', 'comments_list', 'total_comments']
 
 

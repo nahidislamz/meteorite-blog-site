@@ -5,7 +5,7 @@ const Tags = props => {
 
     return props.tagsList.map(tag => (
         <Aux>
-            <p className="badge badge-danger mx-1">{tag.name}</p>
+            <p className="badge badge-danger text-white mx-1">{tag.name}</p>
         </Aux>
     ));
 };
