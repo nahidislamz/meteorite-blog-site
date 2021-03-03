@@ -28,16 +28,18 @@ class PostDetails extends Component {
         AxiosInstance.get("blog/tags/" + this.props.match.params.slug + "/")
             .then(response => {
                 this.setState({ tags: response.data });
+                console.log(response.data)
             })
             .catch(error => {
-                alert("Error Loading Comments. Try Again..!!");
+                alert("Error Loading tags. Try Again..!!");
             });
+           
     };
     getCommentsList = () => {
         AxiosInstance.get("blog/comments/" + this.props.match.params.slug + "/")
             .then(response => {
                 this.setState({ comments: response.data });
-                console.log(response.data)
+               
             })
             .catch(error => {
                 alert("Error Loading Comments. Try Again..!!");

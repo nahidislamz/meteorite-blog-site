@@ -8,17 +8,18 @@ class CreatePost extends Component {
         title: "",
         body: "",
         thumbnail:null,
-        tags_list: [],
+        tags: [],
         is_published:false,
-        tagList:[]
+        tagList:[],
+        
     };
+
     
-    
-    
+
     getTagsList = () => {
         AxiosInstance.get("blog/tags-list/")
             .then(response => {
-                this.setState({ tags_list: response.data });
+                this.setState({ tags: response.data });
                 console.log(response.data);
             })
             .catch(error => {
@@ -29,14 +30,6 @@ class CreatePost extends Component {
         this.getTagsList()
     }
 
-    handleReset = () => {
-        Array.from(document.querySelectorAll("input")).forEach(
-            input => (input.value = "")
-          );
-        this.setState({
-            itemvalues: [{}]
-        });
-      };
     onFormSubmitEventHandler = event => {
         event.preventDefault();
         let data = new FormData();
@@ -66,22 +59,20 @@ class CreatePost extends Component {
         })
     }
     onCheckboxChange = (event)=>{
+        let tagsArray=[];
         let isChecked = event.target.checked
         var name = event.target.value
-        var id = event.target.id
         console.log(isChecked)
         
         if(isChecked){
-            this.setState({
-                tagList: [
-                    {
-                        id:parseInt(id),
-                        name:name,
-                    }
-                ],  
-            })
-            console.log(this.state.tagList)
+            tagsArray.push(name)
         }
+        this.setState({
+            tagList:  tagsArray
+        })
+                
+            console.log(this.state.tagList)
+        
     }
     render() {
    
@@ -119,10 +110,10 @@ class CreatePost extends Component {
                         </div>
                         <div className="form-group mb-3">
                             {
-                            <p className="">{this.state.tags_list.map(tag =>(
+                            <p className="">Pick Your Tags:  <span className="mx-2"> </span>{this.state.tags.map(tag =>(
                                 <>
-                                    <input type="checkbox" id={tag.id} value={tag.name} onChange={this.onCheckboxChange}/>
-                                    <span key={tag.id} className="badge badge-secondary mx-1 py-1">{tag.name}</span>
+                                    <input type="checkbox" value={tag.name} onChange={this.onCheckboxChange}/>
+                                    <span className="badge badge-secondary mx-1 py-1">{tag.name}</span>
                                 </>
                             ))}
                             </p>

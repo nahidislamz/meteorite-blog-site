@@ -6,15 +6,19 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .utils import unique_slug_generator
-
+from django.core.validators import RegexValidator
 
 User = get_user_model()
+
+
+alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=50, verbose_name=_("Name"),
+    unique=True, validators=[alphanumeric], primary_key=True)
 
     def __str__(self):
         return self.name
@@ -25,7 +29,7 @@ class Post(models.Model):
     thumbnail = models.ImageField(
         _("Thumbnail"), upload_to=upload_to, default='posts/default.jpg')
     body = models.TextField()
-    tags = models.ManyToManyField(Tag, null=True, blank=True)
+    tags = models.ManyToManyField(Tag,related_name="posts",verbose_name=_("Tags"))
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts', related_query_name='post')   
     slug = models.SlugField(blank=True, null=True)
@@ -36,15 +40,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-    
-    @property
-    def tags_list(self):
-        return self.tags.all()
 
     @property
     def comments_list(self):
         return self.comments.filter(is_displayed=True)
 
+    @property
+    def tags_list(self):
+        return self.tags.all()
     @property
     def total_comments(self):
         return self.comments_list.count()

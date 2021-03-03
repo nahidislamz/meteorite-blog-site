@@ -1,11 +1,24 @@
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import get_user_model
 from .models import UserProfile
-from blog.models import Post
+from blog.models import Post,Tag
 from blog.serializers import *
 
 User = get_user_model()
 
+class PrimaryKeyCreateRelatedField(serializers.PrimaryKeyRelatedField):
+
+    def to_internal_value(self, data):
+        if self.pk_field is not None:
+            data = self.pk_field.to_internal_value(data)
+        try:
+            return self.get_queryset().get(pk=data)
+        except ObjectDoesNotExist:
+            # self.fail('does_not_exist', pk_value=data)
+            return self.get_queryset().create(pk=data)
+        except (TypeError, ValueError):
+            self.fail('incorrect_type', data_type=type(data).__name__)
 
 class SignUpSerializer(serializers.ModelSerializer):
 
@@ -60,10 +73,26 @@ class UserStatus(serializers.ModelSerializer):
 
 class PostCreateSerializer(serializers.ModelSerializer):
     #tags_list = TagsSerializer(many=True)
+    tags = PrimaryKeyCreateRelatedField(many=True, queryset=Tag.objects.all())
     class Meta:
         model = Post
         fields = ('title','thumbnail','body','tags', 'author','is_published')
 
+        def run_validation(self, data=serializers.empty):
+            if 'tags' in data:
+                for tag in data['tags']:
+                    Tag.objects.get_or_create(name=tag)
+
+            return super(PostCreateSerializer, self).run_validation(data)
+
+        def create(self, validated_data):
+            tags_data = validated_data.pop('tags')
+          
+            post = Post.objects.create(**validated_data)
+
+            for tag in tags_data:
+                post.tags.add(tag)
+            return post
 
 class PostListSerializer(serializers.ModelSerializer):
 

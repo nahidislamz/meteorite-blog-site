@@ -11,9 +11,9 @@ const Widgets = props => {
                 {props.postList.map(post => (
                     <Aux>
                         <Link to={"blog/details_view/" + post.slug}>
-                            <div className="d-flex w-100 justify-content-between">
-                                <li key={post.id} className="list-group-item">{post.title}</li>
-                            </div>
+                           
+                            <li key={post.id} className="list-group-item">{post.title}</li>
+                           
                         </Link>   
                     </Aux>
                 ))}

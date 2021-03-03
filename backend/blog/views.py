@@ -31,7 +31,7 @@ def TagsListView(request):
 def post_tags_list_view(request, slug):
     post_instance = get_object_or_404(Post, slug=slug)
     tag_list = Tag.objects.filter(
-        post=post_instance)
+        posts=post_instance)
     serializer = TagsSerializer(tag_list, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 

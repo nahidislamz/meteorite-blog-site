@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-
 from rest_framework import generics
 from rest_framework import permissions
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -7,9 +6,8 @@ from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-
 from .serializers import PostCreateSerializer, PostListSerializer, PostUpdateSerializer
-from blog.models import Post
+from blog.models import Post,Tag
 
 User = get_user_model()
 
@@ -51,6 +49,7 @@ def post_create_view(request):
             return Response({'detail': 'Invalid Token'}, status.HTTP_400_BAD_REQUEST)
 
         data = request.data
+        #data = dict.copy(request.data)
         data['author'] = user.pk  # Adding User ID Of The Author
         serializer = PostCreateSerializer(data=data)
 
@@ -62,8 +61,6 @@ def post_create_view(request):
 
     else:
         return Response({'detail': 'Something Went Wrong'}, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 @api_view(['POST'])
