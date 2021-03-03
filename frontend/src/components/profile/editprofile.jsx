@@ -79,14 +79,7 @@ class UserProfileEdit extends Component {
         let form = (
             <Aux>
                 {!this.props.userProfile ? <Redirect to="/dashboard" /> : null}
-                <h1
-                    style={{
-                        fontFamily: "Roboto, sans-serif",
-                        fontWeight: "200",
-                        textAlign:'center',
-                        marginTop:100
-                    }}
-                >
+                <h1 className="h1-resposive display-4 mt-4 text-center">
                     Edit Your Profile
                 </h1>
                 <form className="py-3 px-2" onSubmit={this.onFormSubmitEventHandler}>
@@ -145,7 +138,9 @@ class UserProfileEdit extends Component {
             form = <p>Loading...</p>;
         }
 
-        return <div className="container mt-5 px-4">{form}</div>;
+        return <div className="container mt-5 pt-5 px-4">
+                   <div className="card">{form}</div> 
+                </div>;
     }
 }
 

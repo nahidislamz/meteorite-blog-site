@@ -23,16 +23,14 @@ class CreateComment extends Component {
                 AUTHORIZATION: "JWT " + this.props.token
             }
         }
-        let data = {
-            body:this.state.body
-        }
-        console.log(config);
+        
         this.props.onCreateComment(
-            data,
+            this.state.body,
             this.props.slug,
             config,
-            this.props.refresh
+            this.props.refresh,
         );
+        console.log(config);
     };
 
     render() {
@@ -69,6 +67,7 @@ class CreateComment extends Component {
 const mapStateToProps = state => {
     return {
         token: state.auth.token,
+        isUserProfile: state.user.userProfile !== null,
         loading: state.comment.loading
     };
 };

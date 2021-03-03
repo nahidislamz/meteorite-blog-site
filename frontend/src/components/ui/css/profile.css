@@ -17,7 +17,7 @@ h1 a {
   color: #131313;
   font-weight: bold;
 }
-table tr td{
+table tr th,td{
   font-size: 18px;
 
 }

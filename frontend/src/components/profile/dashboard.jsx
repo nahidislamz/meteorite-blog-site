@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import "../ui/css/profile.css"
 import * as actions from "../../store/actions/index";
 import AxiosInstance from "../../AxiosInstance";
 import Aux from "../../hoc/Aux/Aux";
@@ -59,16 +59,16 @@ class PostList extends Component {
                     <td>{post.total_comments}</td>
                     <td>{new Date(post.created_on).toDateString()}</td>
                     <td>
-                        <Link to={"/dashboard/post-edit/" + post.slug }>
-                            <button className="btn btn-sm btn-warning">
-                                Edit
+                        <Link to={"/dashboard/edit/" + post.slug }>
+                            <button className="btn px-2 btn-sm btn-warning">
+                                <i className="fas fa-edit"></i>
                             </button>
                         </Link>
                         <button
                             id={post.slug}
-                            className="btn btn-sm btn-danger"
+                            className="btn px-2 btn-sm btn-danger"
                             onClick={this.postDeleteHandler}>
-                                Delete
+                                <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
           
@@ -99,8 +99,13 @@ class PostList extends Component {
 
         return (
             <Aux>
-                <div className="mt-5 mx-5 pt-5 px-5 display-4 text-center">Posts List</div>
-                <div>{userPostsListTable}</div>
+                <div className="mt-5 pt-5 mx-5">
+                    <div className="card">
+                        <div className="py-3 display-4 text-center">Posts List</div>
+                        <div className>{userPostsListTable}</div>
+                    </div>
+                    
+                </div>
             </Aux>
         );
     }

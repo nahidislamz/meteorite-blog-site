@@ -9,6 +9,7 @@ import Header from './components/header';
 import Footer from './components/footer';
 import Home from './components/post/home';
 import PostDetails from './components/post/postDetail';
+import PostEdit from './components/profile/editPost';
 const asyncLogin = asyncComponent(() => {
   return import("./components/auth/login");
 });
@@ -27,9 +28,7 @@ const asyncCreatePost = asyncComponent(() => {
 const asyncPostListDashboard = asyncComponent(() => {
     return import("./components/profile/dashboard");
 });
-const asyncPostEditDashboard = asyncComponent(() => {
-    return import("./components/profile/editPost");
-});
+
 
 class App extends Component {
     componentDidMount() {
@@ -46,7 +45,7 @@ class App extends Component {
                 {this.props.isUserProfile ? (
                     <>
                      <Route path="/profile-edit" component={asyncUserProfileUpdate}/>
-                     <Route path="/dashboard/post-edit/:slug/"component={asyncPostEditDashboard} />
+                   
                     </>
                 ) : null}
                 <Route
@@ -57,10 +56,7 @@ class App extends Component {
                     path="/dashboard/post-list"
                     component={asyncPostListDashboard}
                 />
-                <Route
-                    path="/dashboard/post-edit"
-                    component={asyncPostEditDashboard}
-                />
+                <Route path="/dashboard/edit/:slug/" exact component={PostEdit}/>
             </Switch>
         );
         const anonymusUsersRoutes =(

@@ -1,11 +1,11 @@
-from rest_framework import generics 
+from rest_framework import generics,status,permissions
 from .serializers import *
 from .models import *
 from django.shortcuts import get_object_or_404
-from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+
 
 
 class PostListView(generics.ListAPIView):
@@ -59,7 +59,7 @@ def comment_create_view(request, slug):
             valid_data = VerifyJSONWebTokenSerializer().validate(token_data)
             author_user= valid_data.get('user')
         except:
-            return Response({'detail': 'Invalid Token,No Log in user'}, status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'Invalid Token, No Log in user'}, status.HTTP_400_BAD_REQUEST)
 
     
         post_instance = get_object_or_404(Post, slug=slug)

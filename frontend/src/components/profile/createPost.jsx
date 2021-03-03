@@ -63,17 +63,30 @@ class CreatePost extends Component {
         let isChecked = event.target.checked
         var name = event.target.value
         console.log(isChecked)
-        
-        if(isChecked){
-            tagsArray.push(name)
+        this.state.tags.forEach(t=>{
+            if(isChecked){
+            tagsArray.push(t.name)
         }
+        })
+        
         this.setState({
             tagList:  tagsArray
         })
                 
-            console.log(this.state.tagList)
+        console.log(this.state.tagList)
         
     }
+
+    handleCheckChieldElement = (event) => {
+        let tags = this.state.tags
+        tags.forEach(tag => {
+          if (tag.name === event.target.value)
+            tag.isChecked =  event.target.checked
+          })
+        this.setState({tagList: tags})
+        console.log(this.state.tagList)
+     }
+
     render() {
    
         let form = <p className="text-center">Loading...</p>
@@ -112,7 +125,7 @@ class CreatePost extends Component {
                             {
                             <p className="">Pick Your Tags:  <span className="mx-2"> </span>{this.state.tags.map(tag =>(
                                 <>
-                                    <input type="checkbox" value={tag.name} onChange={this.onCheckboxChange}/>
+                                    <input type="checkbox" value={tag.name} onChange={this.handleCheckChieldElement}/>
                                     <span className="badge badge-secondary mx-1 py-1">{tag.name}</span>
                                 </>
                             ))}

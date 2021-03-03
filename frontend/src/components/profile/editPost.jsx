@@ -64,12 +64,7 @@ class PostEdit extends Component {
         if (this.state) {
             form = (
                 <Aux>
-                    <h1 className="text-center py-3"
-                        style={{
-                            fontFamily: "Roboto, sans-serif",
-                            fontWeight: "200"
-                        }}
-                    >
+                    <h1 className="text-center py-3 display-4 pt-5 mt-5">
                         Edit Post
                     </h1>
                     <form onSubmit={this.onFormSubmitEventHandler}>
