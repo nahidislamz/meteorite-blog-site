@@ -7,7 +7,7 @@ class TagsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ['name',]
+        fields = ('name',)
 
 class CommentSerializer(serializers.ModelSerializer):
     author_full_name = serializers.CharField()

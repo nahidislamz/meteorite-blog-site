@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Aux from "../../hoc/Aux/Aux";
 import * as actions from "../../store/actions/index";
 import AxiosInstance from "../../AxiosInstance"
+var select="Select"
 class CreatePost extends Component {
     state = {       
         title: "",
@@ -10,7 +11,7 @@ class CreatePost extends Component {
         thumbnail:null,
         tags: [],
         is_published:false,
-        tagList:[],
+        category:[]
         
     };
 
@@ -20,7 +21,7 @@ class CreatePost extends Component {
         AxiosInstance.get("blog/tags-list/")
             .then(response => {
                 this.setState({ tags: response.data });
-                console.log(response.data);
+                //console.log(response.data);
             })
             .catch(error => {
                 alert(error,"Error Loading tags. Try Again..!!");
@@ -36,7 +37,7 @@ class CreatePost extends Component {
         data.append('title', this.state.title);
         data.append('thumbnail', this.state.thumbnail);
         data.append('body', this.state.body);
-        data.append('tags',this.state.tagList);
+        data.append('tags',this.state.category);
         data.append('is_published',true);
         const config = {
             headers: {
@@ -51,6 +52,8 @@ class CreatePost extends Component {
         this.setState({
           [event.target.id]: event.target.value
         })
+        console.log(event.target.value)
+        select="Selected"
       };
 
     onImageChange = (event)=>{
@@ -58,37 +61,10 @@ class CreatePost extends Component {
             thumbnail:event.target.files[0],
         })
     }
-    onCheckboxChange = (event)=>{
-        let tagsArray=[];
-        let isChecked = event.target.checked
-        var name = event.target.value
-        console.log(isChecked)
-        this.state.tags.forEach(t=>{
-            if(isChecked){
-            tagsArray.push(t.name)
-        }
-        })
-        
-        this.setState({
-            tagList:  tagsArray
-        })
-                
-        console.log(this.state.tagList)
-        
-    }
-
-    handleCheckChieldElement = (event) => {
-        let tags = this.state.tags
-        tags.forEach(tag => {
-          if (tag.name === event.target.value)
-            tag.isChecked =  event.target.checked
-          })
-        this.setState({tagList: tags})
-        console.log(this.state.tagList)
-     }
+ 
 
     render() {
-   
+      
         let form = <p className="text-center">Loading...</p>
         if (this.state) {
         
@@ -109,7 +85,7 @@ class CreatePost extends Component {
                         </div>
                        
                         <div className="form-group mb-3">
-                            <textarea  id="body" className="form-control" placeholder="Write Your Content Here..." 
+                            <textarea rows="10"  id="body" className="form-control" placeholder="Write Your Content Here..." 
                             value={this.state.body} onChange={this.handleChange} />
                         </div>
                         <div className="form-group mb-3">
@@ -122,16 +98,20 @@ class CreatePost extends Component {
                                 onChange={this.onImageChange} />
                         </div>
                         <div className="form-group mb-3">
+                            <p className="py-1">Pick Your Category: </p>
                             {
-                            <p className="">Pick Your Tags:  <span className="mx-2"> </span>{this.state.tags.map(tag =>(
-                                <>
-                                    <input type="checkbox" value={tag.name} onChange={this.handleCheckChieldElement}/>
-                                    <span className="badge badge-secondary mx-1 py-1">{tag.name}</span>
-                                </>
-                            ))}
-                            </p>
-                            }
+                                <select 
+                                    className="mb-2 browser-default custom-select" 
+                                    id="category" 
+                                    onChange={this.handleChange} 
+                                    value={this.state.tags}>
+                                    <option className="selected" value={this.state.category}>{select}: {this.state.category}</option>
+                                    {this.state.tags.map(tag =>(
+                                    <option value={tag.name}>{tag.name}</option>
+                                    ))}
+                                </select>
                            
+                            }                      
                         </div>
                         <div className="form-group mb-3">
                             <input type="submit" className="btn btn-primary" value="Post" />

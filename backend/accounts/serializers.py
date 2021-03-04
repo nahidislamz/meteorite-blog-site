@@ -39,17 +39,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     website = serializers.URLField(
         source='profile.website', allow_blank=True, allow_null=True)
+    profile_pic = serializers.ImageField(source='profile.profile_pic')
     bio = serializers.CharField(
         source='profile.bio', allow_blank=True, allow_null=True)
-    facebook = serializers.URLField(
+    facebook = serializers.CharField(
         source='profile.facebook', allow_blank=True, allow_null=True)
-    twitter = serializers.URLField(
+    twitter = serializers.CharField(
         source='profile.twitter', allow_blank=True, allow_null=True)
 
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name',
-                  'website', 'bio', 'facebook', 'twitter']
+                  'website','profile_pic', 'bio', 'facebook', 'twitter']
 
     def update(self, instance, validated_data):
 
@@ -100,7 +101,7 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'is_published', 'slug',
+        fields = ('title','thumbnail', 'is_published', 'slug',
                   'total_comments', 'created_on')
 
 class PostUpdateSerializer(serializers.ModelSerializer):

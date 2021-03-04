@@ -54,24 +54,29 @@ class PostList extends Component {
     render() {
         let postsList = this.props.userPostsList
             ? this.props.userPostsList.map(post => (
-                  <tr key={post.slug}>
-                    <td>{post.title}</td>
-                    <td>{post.total_comments}</td>
-                    <td>{new Date(post.created_on).toDateString()}</td>
-                    <td>
-                        <Link to={"/dashboard/edit/" + post.slug }>
-                            <button className="btn px-2 btn-sm btn-warning">
-                                <i className="fas fa-edit"></i>
+                  <tr className="my-2" key={post.slug}>
+                        <td>
+                          <img className="img img-cover" width={140} src={post.thumbnail} alt=""/>
+                        </td>
+                        <td>
+                            <h5 className="h5-responsive"> {post.title} </h5>
+                            <small className="badge badge-sm badge-info">Comments: {post.total_comments}</small>
+                        </td>
+                        
+                        <td>{new Date(post.created_on).toDateString()}</td>
+                        <td>
+                            <Link to={"/dashboard/edit/" + post.slug }>
+                                <button className="btn px-2 btn-sm btn-warning">
+                                    <i className="fas fa-edit"></i>
+                                </button>
+                            </Link>
+                            <button
+                                id={post.slug}
+                                className="btn px-2 btn-sm btn-danger"
+                                onClick={this.postDeleteHandler}>
+                                    <i class="fas fa-trash-alt"></i>
                             </button>
-                        </Link>
-                        <button
-                            id={post.slug}
-                            className="btn px-2 btn-sm btn-danger"
-                            onClick={this.postDeleteHandler}>
-                                <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-          
+                        </td>
                   </tr>
               ))
             : null;
@@ -81,16 +86,7 @@ class PostList extends Component {
         if (!this.props.loading && this.props.userPostsList) {
             userPostsListTable = (
                 <div className="container mt-5 px-1">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Total Comments</th>
-                                <th>Date Created</th>
-                                <th>Actions</th>
-                               
-                            </tr>
-                        </thead>
+                    <table className="table table-borderless">
                         <tbody>{postsList}</tbody>
                     </table>
                 </div>

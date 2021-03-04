@@ -5,7 +5,6 @@ import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/profile.css"
 import logo from "../ui/image/banner.jpg"
-import avater from "../ui/image/avater.png"
 class UserProfileView extends Component {
     fetchUserProfile = () => {
         const config = {
@@ -34,21 +33,21 @@ class UserProfileView extends Component {
                                         <img src={logo} alt={"profile"} className="background"/>
                                     </div>
                                     <div className="profile-thumb-block">
-                                        <img src={avater} alt={"profile"} className="profile"/>
+                                        <img src={this.props.userProfile.profile_pic} alt={"profile"} className="profile"/>
                                     </div>
                                     <div className="card-content">
                                         <h2>{this.props.userProfile.first_name} {this.props.userProfile.last_name}<small>Designer</small></h2>
                                         <div className="icon-block">
                                             
-                                            <Link to={this.props.userProfile.facebook}>
-                                            <i class="fab fa-facebook"></i>
-                                            </Link>
-                                            <Link to={this.props.userProfile.twitter}>
+                                            <a href={"https://www.facebook.com/" + this.props.userProfile.facebook }>
+                                                <i class="fab fa-facebook"></i>
+                                            </a>
+                                            <a href={"https://www.twitter.com/" + this.props.userProfile.twitter}>
                                                 <i className="fab fa-twitter"></i>
-                                            </Link> 
-                                            <Link to="{this.props.userProfile.facebook}">
-                                                <i className="fab fa-google-plus"></i>
-                                            </Link> 
+                                            </a> 
+                                            <a href={"mailto:"+this.props.userProfile.email}>
+                                                <i class="fas fa-envelope"></i>
+                                            </a> 
                                         </div>
                                     </div>
                                 </div>

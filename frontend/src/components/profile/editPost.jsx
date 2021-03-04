@@ -4,7 +4,7 @@ import AxiosInstance from "../../AxiosInstance";
 import Aux from "../../hoc/Aux/Aux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
-
+var select="Select"
 class PostEdit extends Component {
 
     constructor(props){
@@ -13,8 +13,20 @@ class PostEdit extends Component {
             title: "",
             body: "",
             thumbnail: null,
+            tags: [],
+            category:[]
         };
     }
+    getTagsList = () => {
+        AxiosInstance.get("blog/tags-list/")
+            .then(response => {
+                this.setState({ tags: response.data });
+                //console.log(response.data);
+            })
+            .catch(error => {
+                alert(error,"Error Loading tags. Try Again..!!");
+            });
+    };
     componentDidMount() {
         let slugID=this.props.match.params.slug;
         AxiosInstance.get("blog/details_view/" + slugID + "/")
@@ -23,16 +35,20 @@ class PostEdit extends Component {
                 title:  response.data.title,
                 body: response.data.body,
                 thumbnail: response.data.thumbnail,
+                category:response.data.tags
             })
-           
+            
         )
         .catch(err => console.log("Error From PostDetail.js", err));
+        console.log(this.state.category)
+        this.getTagsList();
     }
 
     handleChange = (event) => {   
         this.setState({
            [event.target.id]:[event.target.value]
         });
+         select="Selected"
     };
     onImageChange = (event)=>{
         this.setState({
@@ -74,7 +90,7 @@ class PostEdit extends Component {
                         </div>
                        
                         <div className="form-group mb-3">
-                            <textarea  id="body" className="form-control" placeholder="Write Your Content Here..." 
+                            <textarea rows="10" id="body" className="form-control" placeholder="Write Your Content Here..." 
                             value={this.state.body} onChange={this.handleChange} />
                         </div>
                         <div className="form-group mb-3">
@@ -87,6 +103,22 @@ class PostEdit extends Component {
                                 onChange={this.onImageChange} />
                         </div>
 
+                        <div className="form-group mb-3">
+                            <p className="py-3">Pick Your Category: </p>
+                            {
+                                <select 
+                                    className="py-2 browser-default custom-select" 
+                                    id="category" 
+                                    onChange={this.handleChange} 
+                                    value={this.state.tags}>
+                                    <option className="selected" value={this.state.category}>{select} {this.state.category}</option>
+                                    {this.state.tags.map(tag =>(
+                                    <option value={tag.name}>{tag.name}</option>
+                                    ))}
+                                </select>
+                           
+                            }                      
+                        </div>
                         <div className="form-group mb-3">
                             <input type="submit" className="btn btn-warning" value="Update Post" />
                         </div>

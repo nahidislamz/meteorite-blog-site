@@ -10,15 +10,12 @@ from django.core.validators import RegexValidator
 
 User = get_user_model()
 
-
-alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
-
 def upload_to(instance, filename):
     return 'posts/{filename}'.format(filename=filename)
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, verbose_name=_("Name"),
-    unique=True, validators=[alphanumeric], primary_key=True)
+    unique=True, primary_key=True)
 
     def __str__(self):
         return self.name
