@@ -60,7 +60,7 @@ class PostList extends Component {
                         </td>
                         <td>
                             <h5 className="h5-responsive"> {post.title} </h5>
-                            <small className="badge badge-sm badge-info">Comments: {post.total_comments}</small>
+                            <small className="badge badge-pill badge-info">Comments: {post.total_comments}</small>
                         </td>
                         
                         <td>{new Date(post.created_on).toDateString()}</td>

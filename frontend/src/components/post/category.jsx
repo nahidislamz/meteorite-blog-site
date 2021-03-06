@@ -12,7 +12,7 @@ const Category = props => {
                 { props.tagsList.map(tag => (
                 <>    
                     <Link to="/">
-                        <p className="badge badge-dark text-white px-2 py-2 mx-1 my-1">
+                        <p className="badge badge-pill badge-defaultbadge badge-pill badge-default text-white px-2 py-2 mx-1 my-1">
                             {tag.name}
                         </p>
                     </Link>

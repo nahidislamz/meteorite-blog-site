@@ -4,7 +4,7 @@ import Aux from "../hoc/Aux/Aux";
 import * as actions from "../store/actions/index";
 import "./ui/css/dropdown.css"
 import avater from "../components/ui/image/avater.png"
-import createnew from "../components/ui/image/create-new.jpg"
+import "./ui/css/logo.css"
 const Header = props => { 
 
     const logout=()=>{
@@ -13,9 +13,9 @@ const Header = props => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light  fixed-top" id="mainNav">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-light  fixed-top" id="mainNav">
             <div className="container">
-            <NavLink className="navbar-brand text-dark" to="/">Meteorite</NavLink>
+            <NavLink className="navbar-brand text-dark m-logo" to="/">M</NavLink>
             <button className="navbar-toggler navbar-toggler-right" type="button" 
             data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
@@ -28,20 +28,11 @@ const Header = props => {
                 <>
                 <li className="nav-item">
                     <NavLink className="nav-link text-dark" to="/new-post">new post
-                    <img
-                        src={createnew}
-                        className="rounded-circle px-1"
-                        height="25"
-                        alt=""
-                        loading="lazy"
-                    />
+                        <i style={{fontSize: "22px",padding:4,}} className="fas fa-plus-circle"></i>
                     </NavLink>
                 </li>
                  <li className="nav-item dropdown">
-                    <a
-                    className="nav-link d-flex align-items-center"
-                    href="#!"
-                    >
+                    <a style={{padding:12,}} href="#!">
                     <img
                         src={avater}
                         className="rounded-circle"
@@ -52,13 +43,13 @@ const Header = props => {
                     </a>
                     <ul className="dropdown-content">
                         <li>
-                            <NavLink className="dropdown-link text-dark" to="/profile">Profile</NavLink>
+                            <NavLink style={{fontSize: "16px",fontWeight:'bold'}} className="dropdown-link text-dark" to="/profile"><i className="fas fa-user-circle"></i> Profile</NavLink>
                         </li>
                         <li>
-                            <NavLink className="dropdown-link text-dark" to="/dashboard/post-list">Dashboard</NavLink>
+                            <NavLink style={{fontSize: "16px",fontWeight:'bold'}} className="dropdown-link text-dark" to="/dashboard/post-list"><i className="fas fa-tachometer-alt"></i> Dashboard</NavLink>
                         </li>
                         <li>
-                            <NavLink className="dropdown-link text-dark" to="/" onClick={logout}>Logout</NavLink>
+                            <NavLink style={{fontSize: "16px",fontWeight:'bold'}} className="dropdown-link text-dark" to="/" onClick={logout}><i className="fas fa-sign-out-alt"></i> Logout</NavLink>
                         </li>
                     </ul>
                 </li>

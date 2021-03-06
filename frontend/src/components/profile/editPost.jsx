@@ -129,7 +129,7 @@ class PostEdit extends Component {
         return this.props.loading ? (
             <p className="text-center mt-5">Loading...</p>
         ) : (
-            <div className="container mt-5">{form}</div>
+            <div className="container mt-5 px-3">{form}</div>
         );
     }
 }

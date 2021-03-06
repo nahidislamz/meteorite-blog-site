@@ -7,9 +7,9 @@ const Search = props => {
             <h5 className="card-header">Search</h5>
             <div className="card-body">
                 <div className="input-group">
-                    <input type="text" className="form-control m-0 border" placeholder="Search for..."/>
+                    <input type="text" className="form-control m-0 border" placeholder="Search Here..."/>
                     <span className="input-group-append">
-                        <button className="btn btn-md btn-secondary m-0" type="button">Go!</button>
+                        <button className="btn btn-md btn-secondary m-0" type="button"><i class="fas fa-search"></i></button>
                     </span>
                 </div>
             </div>

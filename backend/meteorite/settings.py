@@ -132,7 +132,7 @@ SITE_ID = 1
 REST_USE_JWT = True
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=86400),
 }
 
 
@@ -140,7 +140,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-
 }
 
 CORS_ORIGIN_ALLOW_ALL = True

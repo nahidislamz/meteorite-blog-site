@@ -12,7 +12,7 @@ const post = props => {
                     {props.title}
                 </h2>
                 <Link to={"blog/details_view/" + props.slug}>
-                    <button className="btn btn-primary">Read More &rarr;</button>
+                    <button className="btn btn-sm btn-pink darken-4">Read More &rarr;</button>
                 </Link>   
                 <div className="card-footer text-muted mt-2">
                     Posted on {new Date(props.datePublished).toDateString()} by

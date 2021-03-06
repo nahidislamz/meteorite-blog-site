@@ -5,12 +5,29 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
+from rest_framework.pagination import PageNumberPagination
 
+class CustomPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+                'next': self.get_next_link(),
+                'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'page_size': self.page_size,
+            'results': data
+        })
 
 
 class PostListView(generics.ListAPIView):
     queryset = Post.objects.filter(is_published=True)
     serializer_class = PostListSerializer
+    pagination_class = CustomPagination
     lookup_field = 'slug'
 
 
@@ -71,7 +88,10 @@ def comment_create_view(request, slug):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'comments': 'Something Went Wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

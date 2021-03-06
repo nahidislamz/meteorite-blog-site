@@ -17,7 +17,7 @@ class CreateComment extends Component {
 
     onFormSubmitHandler = event => {
         event.preventDefault();
-        let config = {
+        const config = {
             headers: {
                 "Content-Type": "application/json",
                 AUTHORIZATION: "JWT " + this.props.token

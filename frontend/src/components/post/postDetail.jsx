@@ -63,7 +63,7 @@ class PostDetails extends Component {
                     <div className="container mt-5 pt-5">
                         <div className="row">
                             <div className="col-lg-8">
-                                <h1 className="mt-4">{this.state.postBody.title}</h1>
+                                <h1 className="h1-responsive mt-4">{this.state.postBody.title}</h1>
                                 <p className="lead">
                                     Atuhor : <Link to="/"> {this.state.postBody.author_full_name}</Link>
                                 </p>
@@ -72,12 +72,10 @@ class PostDetails extends Component {
                                     ).toDateString()}
                                 </p>
                                 <hr/>
-                                 <Tags tagsList={this.state.tags}/>
-                                <hr/>
-                                
+                                 <span>Category: </span><Tags tagsList={this.state.tags}/>
 
                                 <img className="img-fluid rounded" src={this.state.postBody.thumbnail} alt=""/>
-                                <hr/>
+                            
                                 <p className="lead">
                                     {this.state.postBody.body}
                                 </p>

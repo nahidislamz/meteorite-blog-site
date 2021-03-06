@@ -38,14 +38,7 @@ class Login extends Component {
 
         let form = (
             <Aux>
-                <h1 className="text-center mb-4"
-                    style={{
-                        fontFamily: "Roboto, sans-serif",
-                        fontWeight: "200"
-                    }}
-                >
-                    Login
-                </h1>
+                <h1 className="h1-responsive text-center mb-4">Login</h1>
                 <form onSubmit={this.loginHandler}>
                         <div className="form-group mb-3">
                             <input type="text" className="form-control" placeholder="Your Username *" 

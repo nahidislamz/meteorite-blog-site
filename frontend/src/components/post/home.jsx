@@ -5,12 +5,30 @@ import Post from "../postList"
 import Search from "./search"
 import Categories from "./category"
 import Widgets from "./widget"
+let URL_BLOG ="blog/"
 class Home extends Component {
     state = {
         posts: [],
+        links: '',
         loading: true,
         tags: [],
     };    
+    prevPage = () => {
+        let toPage = this.state.links.previous
+        URL_BLOG = "blog/?"+toPage
+        console.log(URL_BLOG);
+        this.loadPosts(toPage);
+        //window.location.reload();
+        
+    }
+
+    nextPage = () => {
+        let toPage = this.state.links.next
+        URL_BLOG = "blog/?"+toPage
+        console.log(URL_BLOG);
+        this.loadPosts(toPage); 
+        //window.location.reload();
+    }
     getTagsList = () => {
         AxiosInstance.get("blog/tags-list/")
             .then(response => {
@@ -20,15 +38,23 @@ class Home extends Component {
                 alert(error,"Error Loading tags. Try Again..!!");
             });
     };
-    componentDidMount() {
-        this.getTagsList()
+
+    loadPosts = async () => {
+        await  AxiosInstance.get(URL_BLOG)
+            .then((res) => {
+                console.log(res.data);
+                const posts = res.data.results
+                this.setState({
+                    posts,
+                    links: res.data.links,
+                    loading: false 
+                })
+
+            }).catch(err => console.log("Error From Home.js", err));
     }
-    componentWillMount() {
-        AxiosInstance.get("blog/")
-            .then(response =>{
-                this.setState({ posts: response.data, loading: false });
-            })
-            .catch(err => console.log("Error From Home.js", err));
+    componentDidMount() {
+        this.getTagsList();
+        this.loadPosts();
     }
 
     render() {
@@ -47,18 +73,14 @@ class Home extends Component {
                         <h3 className="my-5 pt-5">Latest Post</h3>
                             {postList}
                         <ul className="pagination justify-content-center mb-4">
-                            <li className="page-item">
-                                <a className="page-link" href="#!">&larr; Older</a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link" href="#!"> 1</a>
-                            </li>
-                            <li className="page-item">
-                                <a className="page-link" href="#!"> 2</a>
-                            </li>
-                            <li className="page-item disabled">
-                                <a className="page-link" href="#!">Newer &rarr;</a>
-                            </li>
+                     
+                            <button  disabled={this.state.links.previous === null}  
+                            className="btn btn-sm btn-pink darken-3" onClick={this.prevPage}>&larr;</button>
+                
+                            <button className="btn btn-sm btn-pink darken-3"
+                                disabled={this.state.links.next === null}
+                                onClick={this.nextPage}> &rarr;</button>
+                           
                         </ul>
                     </div>
                     {/* 2nd column */}

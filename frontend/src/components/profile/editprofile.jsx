@@ -121,7 +121,7 @@ class UserProfileEdit extends Component {
         }
 
         return <div className="container mt-5 pt-5 px-4">
-                   <div className="card">{form}</div> 
+                   <div className="card px-4">{form}</div> 
                 </div>;
     }
 }

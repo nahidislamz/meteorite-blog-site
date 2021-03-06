@@ -11,9 +11,7 @@ const Widgets = props => {
                 {props.postList.map(post => (
                     <Aux>
                         <Link to={"blog/details_view/" + post.slug}>
-                           
                             <li key={post.id} className="list-group-item">{post.title}</li>
-                           
                         </Link>   
                     </Aux>
                 ))}

@@ -74,14 +74,7 @@ class SignUp extends Component {
                       <p className="text-center mt-5">Loading...</p>
                     ) : (
                         <div className='col-md-6 login-form'>
-                            <h1 className="text-center mb-4"
-                                style={{
-                                    fontFamily: "Roboto, sans-serif",
-                                    fontWeight: "200"
-                                }}
-                            >
-                                SignUp
-                            </h1>
+                         <h1 className="h1-responsive text-center mb-4">SignUp</h1>
                             <form onSubmit={this.registerHandler}>
                                 <div className="row">
                                     <div className="col-md-6">
