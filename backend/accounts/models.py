@@ -28,7 +28,9 @@ class UserProfile(models.Model):
     @property
     def username(self):
         return self.user.username
-
+    @property
+    def profile(self):
+        return self.profile_pic
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, *args, **kwargs):

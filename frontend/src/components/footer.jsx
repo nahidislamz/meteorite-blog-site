@@ -1,13 +1,10 @@
 
 export default function Footer(){
     return(
-        <footer>
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-8 col-md-10 mx-auto">
-                    <p className="copyright text-muted">Copyright &copy; Meteorite 2020</p>
-                    </div>
-                </div>
+        <footer className="mdb-color darken-3 text-light">
+            <div className="containe text-center">
+                <p className="copyright text-light">Copyright &copy; Meteorite Blogging Site 2021</p>
+                <small className="copyright">Developed By Nahid Islam</small>
             </div>
       </footer>
      

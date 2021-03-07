@@ -68,13 +68,7 @@ class CreatePost extends Component {
         
             form = (
                 <Aux>
-                    <h1
-                        style={{
-                            fontFamily: "Roboto, sans-serif",
-                            fontWeight: "200"
-                        }}
-                    >
-                        Create A New Post
+                    <h1 className="h3-responsive my-4">Create A New Post
                     </h1>
                     <form onSubmit={this.onFormSubmitEventHandler}>
                         <div className="form-group mb-3">
@@ -112,7 +106,7 @@ class CreatePost extends Component {
                             }                      
                         </div>
                         <div className="form-group mb-3">
-                            <input type="submit" className="btn btn-primary" value="Post" />
+                            <input type="submit" className="btn btn-pink darken-4" value="Post" />
                         </div>
                     </form>
                 </Aux>

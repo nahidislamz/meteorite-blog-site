@@ -4,7 +4,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
+from accounts.models import UserProfile
 from .utils import unique_slug_generator
 from django.core.validators import RegexValidator
 
@@ -28,7 +28,7 @@ class Post(models.Model):
     body = models.TextField()
     tags = models.ManyToManyField(Tag,related_name="posts",verbose_name=_("Tags"))
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts', related_query_name='post')   
+        UserProfile, on_delete=models.CASCADE, related_name='posts', related_query_name='post')   
     slug = models.SlugField(blank=True, null=True)
     is_published = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -52,10 +52,16 @@ class Post(models.Model):
     @property
     def author_full_name(self):
         try:
-            return f'{self.author.first_name} {self.author.last_name}'
+            return self.author.full_name
         except:
             return "Name Not Set"
-
+    @property
+    def author_profile(self):
+        try:
+            return self.author.profile_pic
+        except:
+            return "Picture Not Set"
+            
     class Meta:
         indexes = [models.Index(fields=['slug'])]
         ordering = ['-published_on']
@@ -82,7 +88,7 @@ def update_published_on(sender, instance, **kwargs):
 
 class Comment(models.Model):
 
-    author = models.ForeignKey(User,default=True, on_delete=models.CASCADE, related_name='comments', related_query_name='comment')
+    author = models.ForeignKey(UserProfile,default=True, on_delete=models.CASCADE, related_name='comments', related_query_name='comment')
     body = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE,
                              related_name='comments', related_query_name='comment')
@@ -95,6 +101,12 @@ class Comment(models.Model):
     @property
     def author_full_name(self):
         try:
-            return f'{self.author.first_name} {self.author.last_name}'
+            return f'{self.author.full_name}'
         except:
             return "Name Not Set"
+    @property
+    def author_profile(self):
+        try:
+            return self.author.profile_pic
+        except:
+            return "Picture Not Set"

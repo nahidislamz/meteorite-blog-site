@@ -1,17 +1,17 @@
 import React from "react";
-import avater from "../ui/image/avater.png"
 
 const comment = props => {
     return (
-        <div className="media my-4">
-            <img className="d-flex mr-3 rounded-circle" src={avater}alt=""/>
+        
+        <div className="media my-4 border border-rounded p-3">
+            <img className="d-flex mr-3 rounded-circle border" width={50} src={"http://127.0.0.1:8000"+props.author_profile} alt=""/>
             <div className="media-body">
                 <h5 className="mt-0 text-dark">{props.author_full_name}</h5>
-                {props.body}
+                <p className="m-0 px-2">{props.body}</p>
             </div>
             <div className="text-dark">
-                <strong>On:</strong>{" "}
-                {new Date(props.publishedOn).toDateString()}
+                
+                <small><strong>On:</strong>{" "}{new Date(props.publishedOn).toDateString()}</small>
             </div>
         </div>
     );

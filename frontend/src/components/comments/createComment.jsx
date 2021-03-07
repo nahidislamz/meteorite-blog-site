@@ -8,7 +8,7 @@ class CreateComment extends Component {
     state = {
             body:"",
         }
-  
+
     onBodyChange = (event) => {
         this.setState({
             body:event.target.value,

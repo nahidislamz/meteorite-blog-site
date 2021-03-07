@@ -19,7 +19,7 @@ class PostListView (generics.ListAPIView):
         return self.list(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
-        user = request.user
+        user = request.user.profile
         if user is not None:
             queryset = Post.objects.filter(author=user)
         else:
@@ -118,7 +118,7 @@ def post_delete_view(request):
             return Response({'detail': 'Invalid Token'}, status.HTTP_400_BAD_REQUEST)
 
         instance = Post.objects.get(slug=request.data.get('slug'))
-        admin_user = User.objects.get(pk=1)  # PK Of Admin User Is 1
+        admin_user = User.objects.get(pk=logged_in_user.pk)  # PK Of Admin User Is 1
 
         if(instance.author == logged_in_user or logged_in_user == admin_user):
             instance.delete()

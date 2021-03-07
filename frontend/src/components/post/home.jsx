@@ -107,6 +107,7 @@ class Home extends Component {
                            
                         </ul>
                     </div>
+
                     {/* 2nd column */}
                         <div className="col-md-4 mt-5 pt-5">
                             <div className="card my-4">
