@@ -37,6 +37,7 @@ def post_create_view(request):
 
     if request.method == 'POST':
         token_type, token = request.META.get('HTTP_AUTHORIZATION').split()
+        
         if(token_type != 'JWT'):
             return Response({'detail': 'No JWT Authentication Token Found'}, status=status.HTTP_400_BAD_REQUEST)
 

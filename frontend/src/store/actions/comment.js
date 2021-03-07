@@ -24,15 +24,16 @@ export const createCommentFail = error => {
 export const createComment = (data, slug,config,refreshFunction) => {
     return dispatch => {
         dispatch(createCommentInit());
-        AxiosInstance.post("/blog/comment/" + slug + "/", data,config)
+        AxiosInstance.post("/blog/comment-create/" + slug + "/", data,config)
             .then(response => {
                 alert("Comment Added Successfully");
                 dispatch(createCommentSuccess());
                 refreshFunction();
             })
             .catch(error => {
-                alert("ERROR..!! Something Went Wrong");
+                alert(error+" Something Went Wrong");
                 dispatch(createCommentFail(error));
             });
+            console.log(config)
     };
 };

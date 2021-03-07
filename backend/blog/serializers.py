@@ -26,13 +26,13 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 
 
 class PostListSerializer(serializers.ModelSerializer):
-
+    tags_list = TagsSerializer(many=True)
     total_comments = serializers.IntegerField()
     author_full_name = serializers.CharField()
 
     class Meta:
         model = Post
-        fields = ['slug', 'title','thumbnail','total_comments', 'author_full_name', 'published_on']
+        fields = ['slug', 'title','thumbnail','total_comments','tags_list', 'author_full_name', 'published_on']
 
 
 class PostDetailSerializer(serializers.ModelSerializer):

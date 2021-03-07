@@ -10,6 +10,7 @@ import Footer from './components/footer';
 import Home from './components/post/home';
 import PostDetails from './components/post/postDetail';
 import PostEdit from './components/profile/editPost';
+
 const asyncLogin = asyncComponent(() => {
   return import("./components/auth/login");
 });
@@ -45,13 +46,13 @@ class App extends Component {
                 {this.props.isUserProfile ? (
                     <>
                      <Route path="/profile-edit" component={asyncUserProfileUpdate}/>
-                   
                     </>
                 ) : null}
                 <Route
                     path="/new-post"
                     component={asyncCreatePost}
-                />
+                />                
+               
                 <Route
                     path="/dashboard/post-list"
                     component={asyncPostListDashboard}

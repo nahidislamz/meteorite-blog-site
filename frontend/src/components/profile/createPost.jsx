@@ -15,8 +15,6 @@ class CreatePost extends Component {
         
     };
 
-    
-
     getTagsList = () => {
         AxiosInstance.get("blog/tags-list/")
             .then(response => {

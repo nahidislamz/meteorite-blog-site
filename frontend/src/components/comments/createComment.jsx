@@ -23,14 +23,15 @@ class CreateComment extends Component {
                 AUTHORIZATION: "JWT " + this.props.token
             }
         }
-        
+        let data={
+            body:this.state.body
+        }
         this.props.onCreateComment(
-            this.state.body,
+            data,
             this.props.slug,
             config,
             this.props.refresh,
-        );
-        console.log(config);
+        )
     };
 
     render() {

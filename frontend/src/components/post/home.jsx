@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import AxiosInstance from "../../AxiosInstance";
 import Post from "../postList"
-import Search from "./search"
+
 import Categories from "./category"
 import Widgets from "./widget"
 let URL_BLOG ="blog/"
@@ -12,6 +12,7 @@ class Home extends Component {
         links: '',
         loading: true,
         tags: [],
+        search:''
     };    
     prevPage = () => {
         let toPage = this.state.links.previous
@@ -21,12 +22,24 @@ class Home extends Component {
         //window.location.reload();
         
     }
-
+    handleSearch=(e)=>{
+        this.setState({
+            search: e.target.value
+          })
+    }
     nextPage = () => {
         let toPage = this.state.links.next
         URL_BLOG = "blog/?"+toPage
         console.log(URL_BLOG);
         this.loadPosts(toPage); 
+        //window.location.reload();
+    }
+    onSearch = () => {
+        let search= this.state.search
+        console.log(search)
+        this.getSearchList(search)
+       
+       
         //window.location.reload();
     }
     getTagsList = () => {
@@ -38,6 +51,17 @@ class Home extends Component {
                 alert(error,"Error Loading tags. Try Again..!!");
             });
     };
+    
+    getSearchList = (search) => {
+        AxiosInstance.get("blog/search/?search="+search)
+            .then(response => {
+                this.setState({ posts: response.data });
+            })
+            .catch(error => {
+                alert(error,"Error Loading tags. Try Again..!!");
+        }); console.log(this.state.posts);
+    };
+
 
     loadPosts = async () => {
         await  AxiosInstance.get(URL_BLOG)
@@ -75,17 +99,32 @@ class Home extends Component {
                         <ul className="pagination justify-content-center mb-4">
                      
                             <button  disabled={this.state.links.previous === null}  
-                            className="btn btn-sm btn-pink darken-3" onClick={this.prevPage}>&larr;</button>
+                            className="btn btn-sm btn-danger" onClick={this.prevPage}>&larr;Prev</button>
                 
-                            <button className="btn btn-sm btn-pink darken-3"
+                            <button className="btn btn-sm btn-success"
                                 disabled={this.state.links.next === null}
-                                onClick={this.nextPage}> &rarr;</button>
+                                onClick={this.nextPage}> &rarr;Next</button>
                            
                         </ul>
                     </div>
                     {/* 2nd column */}
-                    <div className="col-md-4 mt-5 pt-5">
-                        <Search/>
+                        <div className="col-md-4 mt-5 pt-5">
+                            <div className="card my-4">
+                            <h5 className="card-header">Search</h5>
+                            <div className="card-body">
+                                <div className="input-group">
+                                    <input type="text" className="form-control m-0 border"
+                                        value={this.state.search}
+                                        onChange={this.handleSearch} 
+                                        placeholder="Search Here..."/>
+                                    <span className="input-group-append">
+                                        <button className="btn btn-md btn-secondary m-0" 
+                                                onClick={this.onSearch}
+                                                type="button"><i class="fas fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <Categories tagsList={this.state.tags}/>
                         <Widgets postList={this.state.posts} title="Popular Posts"/>
                     </div>

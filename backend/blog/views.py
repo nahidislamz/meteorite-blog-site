@@ -1,4 +1,4 @@
-from rest_framework import generics,status,permissions
+from rest_framework import generics,status,permissions,filters
 from .serializers import *
 from .models import *
 from django.shortcuts import get_object_or_404
@@ -6,7 +6,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_jwt.serializers import VerifyJSONWebTokenSerializer
 from rest_framework.pagination import PageNumberPagination
-
+from rest_framework.views import APIView
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+    AllowAny,
+)
 class CustomPagination(PageNumberPagination):
     page_size = 5
     page_size_query_param = 'page_size'
@@ -30,11 +35,17 @@ class PostListView(generics.ListAPIView):
     pagination_class = CustomPagination
     lookup_field = 'slug'
 
+class PostListFilter(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostListSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
 
 class PostDetailView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     lookup_field = 'slug'
+
 
 
 @api_view(['GET'])
@@ -74,14 +85,14 @@ def comment_create_view(request, slug):
 
         try:
             valid_data = VerifyJSONWebTokenSerializer().validate(token_data)
-            author_user= valid_data.get('user')
+            author= valid_data.get('user')
         except:
             return Response({'detail': 'Invalid Token, No Log in user'}, status.HTTP_400_BAD_REQUEST)
-
-    
-        post_instance = get_object_or_404(Post, slug=slug)
-        request.data['author'] = author_user.pk
-        request.data['post'] = post_instance.pk
+        #data = JSONParser().parse(request.data)
+        data = request.data
+        post = get_object_or_404(Post, slug=slug)
+        data['author'] = author.pk
+        data['post'] = post.pk
         
         serializer = CommentCreateSerializer(data=request.data)
         
@@ -92,6 +103,7 @@ def comment_create_view(request, slug):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'comments': 'Something Went Wrong'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 

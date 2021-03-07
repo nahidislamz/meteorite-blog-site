@@ -15,7 +15,7 @@ const Header = props => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-light  fixed-top" id="mainNav">
             <div className="container">
-            <NavLink className="navbar-brand text-dark m-logo" to="/">M</NavLink>
+            <a className="navbar-brand text-dark m-logo" href="/">M</a>
             <button className="navbar-toggler navbar-toggler-right" type="button" 
             data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
