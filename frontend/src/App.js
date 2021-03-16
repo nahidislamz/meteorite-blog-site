@@ -10,6 +10,8 @@ import Footer from './components/footer';
 import Home from './components/post/home';
 import PostDetails from './components/post/postDetail';
 import PostEdit from './components/profile/editPost';
+import AdminUserEdit from "./components/meteorite_admin/users/userEdit"
+import AdminPostEdit from "./components/meteorite_admin/posts/postEdit"
 
 const asyncLogin = asyncComponent(() => {
   return import("./components/auth/login");
@@ -29,7 +31,24 @@ const asyncCreatePost = asyncComponent(() => {
 const asyncPostListDashboard = asyncComponent(() => {
     return import("./components/profile/dashboard");
 });
-
+const asyncAdminDashboard = asyncComponent(() => {
+    return import("./components/meteorite_admin/dashboard");
+});
+const asyncAdminUserList = asyncComponent(() => {
+    return import("./components/meteorite_admin/users/userList");
+});
+const asyncAdminUserCreate = asyncComponent(() => {
+    return import("./components/meteorite_admin/users/userCreate");
+});
+const asyncAdminPostList = asyncComponent(() => {
+    return import("./components/meteorite_admin/posts/postList");
+});
+const asyncAdminCommentList = asyncComponent(() => {
+    return import("./components/meteorite_admin/comments/commentsList");
+});
+const asyncAdminPostCommentsList = asyncComponent(() => {
+    return import("./components/meteorite_admin/posts/postComments");
+});
 
 class App extends Component {
     componentDidMount() {
@@ -58,16 +77,51 @@ class App extends Component {
                     component={asyncPostListDashboard}
                 />
                 <Route path="/dashboard/edit/:slug/" exact component={PostEdit}/>
+                {/* Admin Dashboard Routes*/}
+                <Route
+                    path="/admin-panel" exact
+                    component={asyncAdminDashboard}
+                />
+                <Route
+                    path="/admin-panel/user-list" exact
+                    component={asyncAdminUserList}
+                />
+                 <Route
+                    path="/admin-panel/user-create" exact
+                    component={asyncAdminUserCreate}
+                />
+                <Route
+                    path="/admin-panel/users/edit/:pk/" exact
+                    component={AdminUserEdit}
+                />
+                <Route
+                    path="/admin-panel/post-list"
+                    component={asyncAdminPostList}
+                />
+                  <Route
+                    path="/admin-panel/post/edit/:slug/" exact
+                    component={AdminPostEdit}
+                />
+                <Route
+                    path="/admin-panel/comments/list/:slug"
+                    component={asyncAdminPostCommentsList}
+                />
+                 <Route
+                    path="/admin-panel/comment-list"
+                    component={asyncAdminCommentList}
+                />
             </Switch>
         );
         const anonymusUsersRoutes =(
+            
             <Switch>
                 <Route path="/login" component={asyncLogin}/>
                 <Route path="/signup" component={asyncSignUp}/>
                 <Route path="/" exact component={Home}/>
                 <Route path="/blog/details_view/:slug/" exact component={PostDetails}/>
-                
+               
             </Switch>
+            
         );
         return (
           <> 
@@ -76,7 +130,7 @@ class App extends Component {
                 this.props.isAuth
                 ? authenticatedUsersRoutes
                 : anonymusUsersRoutes
-            }
+            } 
             <Footer/>
           </>
 

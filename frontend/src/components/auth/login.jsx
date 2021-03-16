@@ -71,7 +71,7 @@ class Login extends Component {
                         <Redirect to={this.props.loginRedirectURL} />
                        
                     ) : (
-                        <div className='col-md-6 login-form'>{form}</div>
+                        <div className='col-md-6 login-form mb-4 card'>{form}</div>
                     )}
                 </div>
             </Aux>

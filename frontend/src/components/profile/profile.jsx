@@ -93,69 +93,7 @@ class UserProfileView extends Component {
                              
                             </div>
                         </div>
-                    </section>
-
-                  {/*}  <table className="table px-4 text-center mx-4">
-                        <tbody>
-                            <tr>
-                                <th>First Name</th>
-                                <td>{this.props.userProfile.first_name}</td>
-                            </tr>
-                            <tr>
-                                <th>Last Name</th>
-                                <td>{this.props.userProfile.last_name}</td>
-                            </tr>
-                            <tr>
-                                <th>Username</th>
-                                <td>{this.props.userProfile.username}</td>
-                            </tr>
-                            <tr>
-                                <th>Email</th>
-                                <td>{this.props.userProfile.email}</td>
-                            </tr>
-                            <tr>
-                                <th>Bio</th>
-                                <td>{this.props.userProfile.bio}</td>
-                            </tr>
-                            <tr>
-                                <th>Website</th>
-                                <td>
-                                    <a href={this.props.userProfile.website}>
-                                        {this.props.userProfile.website}
-                                    </a>
-                                </td>
-                            </tr>      
-                        </tbody>
-                    </table>
-                    <div className="text-center py-3">
-                    {this.props.userProfile.facebook ? (
-                        <a href={this.props.userProfile.facebook}>
-                            <img
-                                width="50px"
-                                className="px-1 img"
-                                src="https://svgshare.com/i/7V_.svg"
-                                alt="Facebook"
-                                title="Facebook"
-                            />
-                        </a>
-                    ) : null}
-                    {this.props.userProfile.twitter ? (
-                        <a
-                            href={
-                                this.props.userProfile.twitter
-                            }
-                        >
-                            <img
-                                width="50px"
-                                className="px-1 img"
-                                src="https://svgshare.com/i/7Vj.svg"
-                                alt="Twitter"
-                                title="Twitter"
-                            />
-                        </a>
-                    ) : null}
-                        </div>*/}
-                   
+                    </section>                   
                 </Aux>
             );
         }
@@ -166,7 +104,7 @@ class UserProfileView extends Component {
         return (
             <Aux>
                 <div className="container mt-5 pt-5">
-                    <div className="px-4 mt-5">{profile}</div>
+                    <div className="px-4 my-5">{profile}</div>
                 </div>
             </Aux>
         );

@@ -12,6 +12,7 @@ urlpatterns = [
     
     path("accounts/", include('accounts.urls')),
     path("blog/", include('blog.urls')),
+    path("meteorite_admin/", include('meteorite_admin.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

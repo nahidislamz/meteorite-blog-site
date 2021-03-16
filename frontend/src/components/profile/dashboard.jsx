@@ -95,7 +95,7 @@ class PostList extends Component {
 
         return (
             <Aux>
-                <div className="mt-5 pt-5 mx-5">
+                <div className="my-5 pt-5 mx-5">
                     <div className="card">
                         <div className="py-3 display-4 text-center">Posts List</div>
                         <div className>{userPostsListTable}</div>

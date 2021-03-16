@@ -73,7 +73,7 @@ class SignUp extends Component {
                     {this.props.loading ? (
                       <p className="text-center mt-5">Loading...</p>
                     ) : (
-                        <div className='col-md-6 login-form'>
+                        <div className='col-md-6 login-form mb-4 card'>
                          <h1 className="h1-responsive text-center mb-4">SignUp</h1>
                             <form onSubmit={this.registerHandler}>
                                 <div className="row">

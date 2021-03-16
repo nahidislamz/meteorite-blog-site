@@ -10,5 +10,15 @@ export { sendNewPostToServer, listPostsToUserDashboard } from "./post";
 export { userProfileView, userProfileEdit, userPostEdit } from "./user";
 
 export {
-    createComment
+    adminUserListView,
+    adminCreateUser,
+    adminViewAllPosts,
+    adminEditUser,
+    adminEditPost
+} from "./admin";
+
+export {
+    createComment,
+    adminCommentListLoad,
+    adminCommentEdit
 } from "./comment";

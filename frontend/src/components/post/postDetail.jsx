@@ -87,9 +87,10 @@ class PostDetails extends Component {
                                 <hr/>
                                  <span>Category: </span><Tags tagsList={this.state.tags}/>
                                 <br/>
-                                <div className="text-center">
+                                <div className="text-center mb-3">
                                     <img className="img-fluid" width={720} src={this.state.postBody.thumbnail} alt=""/>
                                 </div>
+                                <hr/>
                             
                                 <p className="lead">
                                     {this.state.postBody.body}

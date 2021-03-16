@@ -7,6 +7,7 @@ import thunk from "redux-thunk";
 import "./index.css";
 import App from "./App";
 import AuthReducer from "./store/reducers/auth";
+import AdminReducer from "./store/reducers/admin";
 import PostReducer from "./store/reducers/post";
 import UserReducer from "./store/reducers/user";
 import CommentReducer from "./store/reducers/comment";
@@ -15,6 +16,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootStore = combineReducers({
     auth: AuthReducer,
+    admin: AdminReducer,
     post: PostReducer,
     user: UserReducer,
     comment: CommentReducer
