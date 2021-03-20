@@ -76,15 +76,15 @@ def post_update_view(request):
 
         try:
             valid_data = VerifyJSONWebTokenSerializer().validate(token_data)
-            logged_in_user = valid_data.get('user')
+            user = valid_data.get('user')
         except:
             return Response({'detail': 'Invalid Token'}, status.HTTP_400_BAD_REQUEST)
 
         updated_data = request.data
         instance = Post.objects.get(slug=updated_data.get('slug'))
         admin_user = User.objects.get(pk=1)  # PK Of Admin User Is 1
-
-        if(instance.author == logged_in_user or logged_in_user == admin_user):
+        author = user.pk
+        if(instance.author == user or user == admin_user):
             updated_data.pop('slug')
             serializer = PostUpdateSerializer(instance, data=updated_data)
 

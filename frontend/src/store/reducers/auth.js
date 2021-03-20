@@ -1,4 +1,4 @@
-import * as actionTypes from "../actions/types";
+import * as types from "../actions/types";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
@@ -37,7 +37,7 @@ const userRegistrationSuccess = (state) => {
     });
 };
 
-const userRegistrationFail = (state, action) => {
+const userRegistrationFail = (state) => {
     return updateObject(state, {
         token: null,
         username: null,
@@ -48,18 +48,26 @@ const userRegistrationFail = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.LOGIN_INIT:
+        case types.LOGIN_INIT:
             return authInit(state, action);
-        case actionTypes.LOGIN_SUCCESS:
+        case types.LOGIN_SUCCESS:
             return authLoginSuccess(state, action);
-        case actionTypes.LOGOUT:
+        case types.LOGOUT:
             return authLogout(state, action);
-        case actionTypes.SIGNUP_INIT:
+        case types.SIGNUP_INIT:
             return userRegistrationInit(state, action);
-        case actionTypes.SIGNUP_SUCCESS:
+        case types.SIGNUP_SUCCESS:
             return userRegistrationSuccess(state, action);
-        case actionTypes.SIGNUP_FAIL:
+        case types.SIGNUP_FAIL:
             return userRegistrationFail(state, action);
+        case types.PASSWORD_RESET_SUCCESS:
+            return
+        case types.PASSWORD_RESET_FAIL:
+            return
+        case types.PASSWORD_RESET_CONFIRM_FAIL:
+            return
+        case types.PASSWORD_RESET_CONFIRM_SUCCESS:
+            return
         default:
             return state;
     }

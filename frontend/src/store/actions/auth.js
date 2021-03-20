@@ -1,15 +1,15 @@
-import * as actionsTypes from "./types";
+import * as types from "./types";
 import AxiosInstance from "../../AxiosInstance";
 
 export const loginInit = () => {
     return {
-        type: actionsTypes.LOGIN_INIT
+        type: types.LOGIN_INIT
     };
 };
 
 export const loginSuccess = (token, username) => {
     return {
-        type: actionsTypes.LOGIN_SUCCESS,
+        type: types.LOGIN_SUCCESS,
         token: token,
         username: username
     };
@@ -17,7 +17,7 @@ export const loginSuccess = (token, username) => {
 
 export const loginFail = error => {
     return {
-        type: actionsTypes.LOGIN_FAIL
+        type: types.LOGIN_FAIL
     };
 };
 
@@ -26,7 +26,7 @@ export const logout = () => {
     localStorage.removeItem("expirationDate");
     localStorage.removeItem("username");
     return {
-        type: actionsTypes.LOGOUT
+        type: types.LOGOUT
     };
 };
 
@@ -92,19 +92,19 @@ export const loginCheckState = () => {
 
 export const signupInit = () => {
     return {
-        type: actionsTypes.SIGNUP_INIT
+        type: types.SIGNUP_INIT
     };
 };
 
 export const signupSuccess = () => {
     return {
-        type: actionsTypes.SIGNUP_SUCCESS
+        type: types.SIGNUP_SUCCESS
     };
 };
 
 export const signupFail = () => {
     return {
-        type: actionsTypes.SIGNUP_FAIL
+        type: types.SIGNUP_FAIL
     };
 };
 
@@ -123,4 +123,49 @@ export const signup = (data, moveToLoginPage) => {
                 alert(error);
             });
     };
+};
+
+
+export const reset_password = (email) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ email });
+
+    try {
+        await AxiosInstance.post('/accounts/password/reset/', body, config);
+
+        dispatch({
+            type: types.PASSWORD_RESET_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: types.PASSWORD_RESET_FAIL
+        });
+    }
+};
+
+export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ uid, token, new_password, re_new_password });
+
+    try {
+        await AxiosInstance.post('/accounts/password/reset/confirm/', body, config);
+
+        dispatch({
+            type: types.PASSWORD_RESET_CONFIRM_SUCCESS
+        });
+    } catch (err) {
+        dispatch({
+            type: types.PASSWORD_RESET_CONFIRM_FAIL
+        });
+    }
 };

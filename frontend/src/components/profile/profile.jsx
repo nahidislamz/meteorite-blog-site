@@ -36,7 +36,7 @@ class UserProfileView extends Component {
                                         <img src={this.props.userProfile.profile_pic} alt={"profile"} className="profile"/>
                                     </div>
                                     <div className="card-content">
-                                        <h2>{this.props.userProfile.first_name} {this.props.userProfile.last_name}<small>Designer</small></h2>
+                                        <h2>{this.props.userProfile.first_name} {this.props.userProfile.last_name}<small>{this.props.userProfile.username}</small></h2>
                                         <div className="icon-block">
                                             
                                             <a href={"https://www.facebook.com/" + this.props.userProfile.facebook }>

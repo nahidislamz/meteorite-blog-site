@@ -64,7 +64,7 @@ class PostEdit extends Component {
         data.append('title', this.state.title);
         data.append('thumbnail', this.state.thumbnail);
         data.append('body', this.state.body);
-       
+        data.append('tags',this.state.category);
         const config = {
             headers: {
                 "Content-Type": "application/json",
