@@ -1,6 +1,7 @@
 from django.urls import path, re_path,include
 from rest_auth.registration.views import RegisterView, VerifyEmailView,ConfirmEmailView
-from rest_auth.views import LoginView, LogoutView
+from rest_auth.views import LoginView, LogoutView,PasswordResetView, PasswordResetConfirmView
+
 from .views import *
 from .admin_views import *
 
@@ -19,6 +20,10 @@ urlpatterns = [
     re_path(r'^account-confirm-email/(?P<key>[-:\w]+)/$',
          VerifyEmailView.as_view(), name='account_confirm_email'),
 
+    path('password-reset/', PasswordResetView.as_view()),
+
+    path('password-reset-confirm/<uidb64>/<token>/',
+         PasswordResetConfirmView.as_view(), name='password_reset_confirm'), 
 
     path('profile/',UserProfileView.as_view()),
     path('user-status/',UserStatusView.as_view()),

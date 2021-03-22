@@ -19,6 +19,13 @@ const asyncLogin = asyncComponent(() => {
 const asyncSignUp = asyncComponent(() => {
   return import("./components/auth/signup");
 });
+const asyncResetPassword = asyncComponent(() => {
+    return import("./components/auth/resetPassword");
+});
+const asyncResetPasswordConfirm = asyncComponent(() => {
+    return import("./components/auth/resetPasswordConfirm");
+});
+
 const asyncUserProfileView = asyncComponent(() => {
     return import("./components/profile/profile");
 });
@@ -117,6 +124,8 @@ class App extends Component {
             <Switch>
                 <Route path="/login" component={asyncLogin}/>
                 <Route path="/signup" component={asyncSignUp}/>
+                <Route path="/accounts/reset-password" component={asyncResetPassword}/>
+                <Route path="/accounts/password-reset-confirm/:uid/:token" exact component={asyncResetPasswordConfirm}/>
                 <Route path="/" exact component={Home}/>
                 <Route path="/blog/details_view/:slug/" exact component={PostDetails}/>
                

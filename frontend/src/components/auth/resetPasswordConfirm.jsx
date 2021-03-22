@@ -1,38 +1,38 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/login.css"
-class Login extends Component {
+
+class ResetPasswordConfirm extends Component {
 
     constructor(props){
         super(props)
         this.state = {
-            email:"",
-            password:"",
+            new_password1: "",
+            new_password2: "",
+            uid: "",
+            token: ""
         }
     }
 
-    loginHandler = event => {
+    resetPasswordHandler = event => {
         event.preventDefault();
-        const loginInfo = {
-            email: this.state.email,
-            password: this.state.password
+        const data = {
+            new_password1: this.state.new_password1,
+            new_password2: this.state.new_password2,
+            uid: this.props.match.params.uid,
+            token: this.props.match.params.token
         };
-        this.props.onAuthLogin(loginInfo,this.props.history.push);
+        this.props.onPasswordResetConfirm(data);
     };
 
-    onEmailChange = (event) =>{
+    onChange = (event) =>{
         this.setState({
-            email:event.target.value
+            [event.target.name]:event.target.value
         })
     }
-    onPasswordChange = (event) =>{
-        this.setState({
-            password:event.target.value
-        })
-    }
+
     render() {
       
         let message=null
@@ -40,7 +40,7 @@ class Login extends Component {
         
         if(this.props.message){
 
-            if(this.props.message === 'Verification e-mail sent. Please Confirm To Login'){
+            if(this.props.message === 'Password has been reset with the new password.'){
            
                 message =  <div className='alert alert-success' role="alert">
                               <i class="fas fa-check-circle"></i> {this.props.message}
@@ -54,24 +54,32 @@ class Login extends Component {
         }
         let form = (
             <Aux>
-                <h1 className="h1-responsive text-center mb-4">Login</h1>
+                <h1 className="h1-responsive text-center mb-4">Reset Your Pasword</h1>
+                <small className="py-3 text-center text-danger">Please Enter Email To Reset The Password</small>
                 {message}
-                <form onSubmit={this.loginHandler}>
+                <form onSubmit={this.resetPasswordHandler}>
                         <div className="form-group mb-3">
-                            <input type="email" className="form-control" placeholder="Your Email *"  required
-                            value={this.state.email} onChange={this.onEmailChange} />
+                            <input type="password" 
+                            className="form-control" 
+                            placeholder="New Password *" 
+                            required
+                            name="new_password1"
+                            value={this.state.new_password1} 
+                            onChange={this.onChange} />
                         </div>
                         <div className="form-group mb-3">
-                            <input type="password" className="form-control" placeholder="Your Password *" required
-                            value={this.state.password} onChange={this.onPasswordChange} />
+                            <input type="password" 
+                            className="form-control"
+                            placeholder="Confirm New Password *"  
+                            required
+                            name="new_password2"
+                            value={this.state.new_password2} 
+                            onChange={this.onChange} />
                         </div>
                         <div className="form-group mb-3">
-                            <input type="submit" className="btnSubmit" value="Login" />
+                            <input type="submit" className="btnSubmit" value="Set New Password" />
                         </div>
-                        <div className="form-group mb-3 text-center">
-                            <NavLink to="/accounts/reset-password" className="ForgetPwd px-3">Forget Password?</NavLink>
-                             Don't have any account? <NavLink to="signup/"className="ForgetPwd">SignUp</NavLink>
-                        </div>
+                    
                 </form>
             </Aux>
         );
@@ -92,18 +100,18 @@ const mapStateToProps = state => {
         isAuth: state.auth.token !== null,
         loginRedirectURL: state.auth.loginRedirectURL,
         message:state.auth.message,
-     
+       
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthLogin: (loginInfo,moveToLoginPage)=>
-            dispatch(actions.login(loginInfo,moveToLoginPage))
+        onPasswordResetConfirm: (data)=>
+            dispatch(actions.reset_password_confirm(data))
     };
 };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Login);
+)(ResetPasswordConfirm);

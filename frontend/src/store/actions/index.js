@@ -3,6 +3,8 @@ export {
     loginCheckState,
     logout,
     signup,
+    reset_password,
+    reset_password_confirm,
     message
 } from "./auth";
 

@@ -54,6 +54,35 @@ const userRegistrationFail = (state,action) => {
     });
 };
 
+const passwordResetFail = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        loginRedirectURL: "/",
+        message:action.message
+    });
+};
+const passwordResetSuccess = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        loginRedirectURL: "/",
+        message:action.message
+    });
+};
+
+const passwordResetConfirmFail = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        loginRedirectURL: "/",
+        message:action.message
+    });
+};
+const passwordResetConfirmSuccess = (state,action) => {
+    return updateObject(state, {
+        loading: false,
+        loginRedirectURL: "/",
+        message:action.message
+    });
+};
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_INIT:
@@ -71,13 +100,13 @@ const reducer = (state = initialState, action) => {
         case types.SIGNUP_FAIL:
             return userRegistrationFail(state, action);
         case types.PASSWORD_RESET_SUCCESS:
-            return
+            return passwordResetSuccess(state,action);
         case types.PASSWORD_RESET_FAIL:
-            return
+            return passwordResetFail(state,action);
         case types.PASSWORD_RESET_CONFIRM_FAIL:
-            return
+            return passwordResetConfirmFail(state,action);
         case types.PASSWORD_RESET_CONFIRM_SUCCESS:
-            return
+            return passwordResetConfirmSuccess(state,action);
         default:
             return state;
     }

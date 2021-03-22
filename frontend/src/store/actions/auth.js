@@ -38,7 +38,7 @@ export const logout = () => {
 export const login = (loginCredentials, moveToLoginPage) => {
     return dispatch => {
         dispatch(loginInit());
-        AxiosInstance.post("/accounts/login/", loginCredentials)
+        AxiosInstance.post("accounts/login/", loginCredentials)
             .then(response => {
                 
                 const expirationDate = new Date(
@@ -127,10 +127,11 @@ export const signupFail = (message) => {
 };
 
 
+
 export const signup = (data, moveToLoginPage) => {
     return dispatch => {
         dispatch(signupInit());
-        AxiosInstance.post("/accounts/signup/", data)
+        AxiosInstance.post("accounts/signup/", data)
             .then(response => {
                 //alert("Registered Successfully. You Can Now Login.");
                 if(response.data.detail === "Verification e-mail sent."){
@@ -171,6 +172,20 @@ export const signup = (data, moveToLoginPage) => {
 };
 
 
+export const passwordResetSuccess = (message) => {
+    return {
+        type: types.PASSWORD_RESET_SUCCESS,
+        message:message
+    };
+};
+export const passwordResetFail = (message) => {
+    return {
+        type: types.PASSWORD_RESET_FAIL,
+        message:message
+    };
+};
+
+
 export const reset_password = (email) => async dispatch => {
     const config = {
         headers: {
@@ -178,39 +193,51 @@ export const reset_password = (email) => async dispatch => {
         }
     };
 
-    const body = JSON.stringify({ email });
+    AxiosInstance.post('accounts/password-reset/', email, config).then(response => {
+        //alert("Registered Successfully. You Can Now Login.");
+    
+        dispatch(passwordResetSuccess(response.data.detail+" Please Confirm To Reset Password"));
+    })
+    .catch(error => {
+        dispatch(passwordResetSuccess(error.response));
+    });
 
-    try {
-        await AxiosInstance.post('/accounts/password/reset/', body, config);
-
-        dispatch({
-            type: types.PASSWORD_RESET_SUCCESS
-        });
-    } catch (err) {
-        dispatch({
-            type: types.PASSWORD_RESET_FAIL
-        });
-    }
 };
 
-export const reset_password_confirm = (uid, token, new_password, re_new_password) => async dispatch => {
+export const passwordResetConfirmSuccess = (message) => {
+    return {
+        type: types.PASSWORD_RESET_CONFIRM_SUCCESS,
+        message:message
+    };
+};
+export const passwordResetConfirmFail = (message) => {
+    return {
+        type: types.PASSWORD_RESET_CONFIRM_FAIL,
+        message:message
+    };
+};
+
+export const reset_password_confirm = (data) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
         }
     };
 
-    const body = JSON.stringify({ uid, token, new_password, re_new_password });
-
-    try {
-        await AxiosInstance.post('/accounts/password/reset/confirm/', body, config);
-
-        dispatch({
-            type: types.PASSWORD_RESET_CONFIRM_SUCCESS
-        });
-    } catch (err) {
-        dispatch({
-            type: types.PASSWORD_RESET_CONFIRM_FAIL
-        });
-    }
+    AxiosInstance.post('accounts/password-reset-confirm/:uid/:token/', data, config).then(response => {
+        //alert("Registered Successfully. You Can Now Login.");
+    
+        dispatch(passwordResetConfirmSuccess(response.data.detail));
+    })
+    .catch(error => {
+        if (error.response) {
+            if(error.response.data.new_password2){
+                dispatch(passwordResetConfirmFail(error.response.data.new_password2));
+                //alert(error.response.data.username);
+            }
+      
+        }
+        
+        
+    });
 };
