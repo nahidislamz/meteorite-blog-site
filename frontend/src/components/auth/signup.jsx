@@ -66,66 +66,68 @@ class SignUp extends Component {
         })
     }
     render() {
-
+        let message=<div></div>
+        if(this.props.message){
+            message = <div className="alert alert-danger" role="alert">
+                            {this.props.message}
+                      </div>
+        }
         return (
             <Aux>
-                <div>   
-                    {this.props.loading ? (
-                      <p className="text-center mt-5">Loading...</p>
-                    ) : (
-                        <div className='col-md-6 login-form mb-4 card'>
-                         <h1 className="h1-responsive text-center mb-4">SignUp</h1>
-                            <form onSubmit={this.registerHandler}>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="form-group mb-3">
-                                            <input type="text" className="form-control" placeholder="First Name" 
-                                            value={this.state.first_name} onChange={this.onFirstNameChange} />
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group mb-3">
-                                            <input type="text" className="form-control" placeholder="Last Name" 
-                                            value={this.state.last_name} onChange={this.onLastNameChange} />
-                                        </div>
-                                    </div>
-                                </div>
-                            
+  
+                <div className='col-md-6 login-form mb-4 card'>
+                    <h1 className="h1-responsive text-center mb-4">SignUp</h1>
+                    {message}
+                    <form onSubmit={this.registerHandler}>
+                        <div className="row">
+                            <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="email" className="form-control" placeholder="Email *" 
-                                    value={this.state.email} onChange={this.onEmailChange} />
+                                    <input type="text" className="form-control" placeholder="First Name" 
+                                    value={this.state.first_name} onChange={this.onFirstNameChange} />
                                 </div>
+                            </div>
+                            <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="text" className="form-control" placeholder="Username *" 
-                                    value={this.state.username} onChange={this.onUsernameChange} />
+                                    <input type="text" className="form-control" placeholder="Last Name" 
+                                    value={this.state.last_name} onChange={this.onLastNameChange} />
                                 </div>
-
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="form-group mb-3">
-                                            <input type="password" className="form-control" placeholder="Password *" 
-                                            value={this.state.password1} onChange={this.onPasswordChange} />
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-group mb-3">
-                                            <input type="password" className="form-control" placeholder="Confirm Password *" 
-                                            value={this.state.password2} onChange={this.onPasswordConfirmChange} />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="form-group mb-3">
-                                    <input type="submit" className="btnSubmit" value="Register" />
-                                </div>
-                                <div className="form-group mb-3 text-center">
-                                    <NavLink to="/" className="ForgetPwd px-3">Forget Password?</NavLink>
-                                    Don't have any account? <NavLink to="/login"className="ForgetPwd">Login</NavLink>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    )}
+                    
+                        <div className="form-group mb-3">
+                            <input type="email" className="form-control" placeholder="Email *" 
+                            value={this.state.email} onChange={this.onEmailChange} />
+                        </div>
+                        <div className="form-group mb-3">
+                            <input type="text" className="form-control" placeholder="Username *" 
+                            value={this.state.username} onChange={this.onUsernameChange} />
+                        </div>
+
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group mb-3">
+                                    <input type="password" className="form-control" placeholder="Password *" 
+                                    value={this.state.password1} onChange={this.onPasswordChange} />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group mb-3">
+                                    <input type="password" className="form-control" placeholder="Confirm Password *" 
+                                    value={this.state.password2} onChange={this.onPasswordConfirmChange} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="form-group mb-3">
+                            <input type="submit" className="btnSubmit" value="Register" />
+                        </div>
+                        <div className="form-group mb-3 text-center">
+                            <NavLink to="/" className="ForgetPwd px-3">Forget Password?</NavLink>
+                            Don't have any account? <NavLink to="/login"className="ForgetPwd">Login</NavLink>
+                        </div>
+                    </form>
                 </div>
+              
             </Aux>
         );
     }
@@ -133,7 +135,8 @@ class SignUp extends Component {
 
 const mapStateToProps = state => {
     return {
-        loading: state.auth.loading
+        loading: state.auth.loading,
+        message:state.auth.message
     };
 };
 

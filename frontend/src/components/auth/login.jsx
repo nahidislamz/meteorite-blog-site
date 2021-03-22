@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import Aux from "../../hoc/Aux/Aux";
 import "../ui/css/login.css"
@@ -20,8 +20,7 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.onAuthLogin(loginInfo);
-       
+        this.props.onAuthLogin(loginInfo,this.props.history.push);
     };
 
     onEmailChange = (event) =>{
@@ -35,10 +34,28 @@ class Login extends Component {
         })
     }
     render() {
+      
+        let message=null
+     
+        
+        if(this.props.message){
 
+            if(this.props.message === 'Verification e-mail sent. Please Confirm To Login'){
+           
+                message =  <div className='alert alert-success' role="alert">
+                              <i class="fas fa-check-circle"></i> {this.props.message}
+                           </div>
+            }
+            else{
+                message =   <div className='alert alert-danger' role="alert">
+                               <i class="fas fa-times-circle"></i> {this.props.message}
+                            </div>
+            }
+        }
         let form = (
             <Aux>
                 <h1 className="h1-responsive text-center mb-4">Login</h1>
+                {message}
                 <form onSubmit={this.loginHandler}>
                         <div className="form-group mb-3">
                             <input type="email" className="form-control" placeholder="Your Email *"  required
@@ -62,17 +79,7 @@ class Login extends Component {
         return (
             <Aux>
                 <div>
-                    {this.props.isAuth ? (
-                        <Redirect to={this.props.loginRedirectURL} />
-                    ) : null}
-
-                    {this.props.loading ? (
-                        
-                        <Redirect to={this.props.loginRedirectURL} />
-                       
-                    ) : (
-                        <div className='col-md-6 login-form mb-4 card'>{form}</div>
-                    )}
+                     <div className='col-md-6 login-form mb-4 card'>{form}</div>
                 </div>
             </Aux>
         );
@@ -83,14 +90,15 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         isAuth: state.auth.token !== null,
-        loginRedirectURL: state.auth.loginRedirectURL
+        loginRedirectURL: state.auth.loginRedirectURL,
+        message:state.auth.message
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuthLogin: (loginInfo)=>
-            dispatch(actions.login(loginInfo))
+        onAuthLogin: (loginInfo,moveToLoginPage)=>
+            dispatch(actions.login(loginInfo,moveToLoginPage))
     };
 };
 

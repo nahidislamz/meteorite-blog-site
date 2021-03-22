@@ -1,6 +1,10 @@
 import * as types from "./types";
 import AxiosInstance from "../../AxiosInstance";
 
+export const message = (text) => {
+    return text
+};
+
 export const loginInit = () => {
     return {
         type: types.LOGIN_INIT
@@ -15,9 +19,10 @@ export const loginSuccess = (token, username) => {
     };
 };
 
-export const loginFail = error => {
+export const loginFail = (message) => {
     return {
-        type: types.LOGIN_FAIL
+        type: types.LOGIN_FAIL,
+        message:message
     };
 };
 
@@ -30,7 +35,7 @@ export const logout = () => {
     };
 };
 
-export const login = (loginCredentials) => {
+export const login = (loginCredentials, moveToLoginPage) => {
     return dispatch => {
         dispatch(loginInit());
         AxiosInstance.post("/accounts/login/", loginCredentials)
@@ -48,11 +53,22 @@ export const login = (loginCredentials) => {
                         response.data.user.username
                     )
                 );
+                moveToLoginPage("/");
                
             })
             .catch(error => {
-                dispatch(loginFail(error));
-                alert("ERROR");
+                
+                if (error.response) {
+                    // Request made and server responded
+                    dispatch(loginFail(error.response.data.non_field_errors));
+                   
+                  } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                  } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                  }
             });
     };
 };
@@ -96,31 +112,60 @@ export const signupInit = () => {
     };
 };
 
-export const signupSuccess = () => {
+export const signupSuccess = (message) => {
     return {
-        type: types.SIGNUP_SUCCESS
+        type: types.SIGNUP_SUCCESS,
+        message:message
     };
 };
 
-export const signupFail = () => {
+export const signupFail = (message) => {
     return {
-        type: types.SIGNUP_FAIL
+        type: types.SIGNUP_FAIL,
+        message:message
     };
 };
+
 
 export const signup = (data, moveToLoginPage) => {
     return dispatch => {
         dispatch(signupInit());
         AxiosInstance.post("/accounts/signup/", data)
             .then(response => {
-                dispatch(signupSuccess());
-                alert("Registered Successfully. You Can Now Login.");
-                moveToLoginPage("/login");
+                //alert("Registered Successfully. You Can Now Login.");
+                if(response.data.detail === "Verification e-mail sent."){
+                    moveToLoginPage("/login");
+                }
+                dispatch(signupSuccess(response.data.detail+" Please Confirm To Login"));
             })
             .catch(error => {
-                dispatch(signupFail());
-
-                alert(error);
+               
+                if (error.response) {
+                    // Request made and server responded
+                    if(error.response.data.username){
+                        dispatch(signupFail(error.response.data.username));
+                        //alert(error.response.data.username);
+                    }
+                    else if(error.response.data.email){
+                        dispatch(signupFail(error.response.data.email));
+                        //alert(error.response.data.email);
+                    }
+                    else if(error.response.data.password1){
+                        dispatch(signupFail(error.response.data.password1));
+                        //alert(error.response.data.password1);
+                    }
+                    else if(error.response.data.password2){
+                        dispatch(signupFail(error.response.data.password2));
+                        //alert(error.response.data.password2);
+                    }
+                  } else if (error.request) {
+                    // The request was made but no response was received
+                    console.log(error.request);
+                  } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                  }
+               
             });
     };
 };

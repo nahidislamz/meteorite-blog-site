@@ -17,7 +17,6 @@ class Home extends Component {
     prevPage = () => {
         let toPage = this.state.links.previous
         URL_BLOG = "blog/?"+toPage
-        console.log(URL_BLOG);
         this.loadPosts(toPage);
         //window.location.reload();
         
@@ -30,13 +29,11 @@ class Home extends Component {
     nextPage = () => {
         let toPage = this.state.links.next
         URL_BLOG = "blog/?"+toPage
-        console.log(URL_BLOG);
         this.loadPosts(toPage); 
         //window.location.reload();
     }
     onSearch = () => {
         let search= this.state.search
-        console.log(search)
         this.getSearchList(search)
        
        
@@ -59,14 +56,14 @@ class Home extends Component {
             })
             .catch(error => {
                 alert(error,"Error Loading tags. Try Again..!!");
-        }); console.log(this.state.posts);
+        }); 
     };
 
 
     loadPosts = async () => {
         await  AxiosInstance.get(URL_BLOG)
             .then((res) => {
-                console.log(res.data);
+               
                 const posts = res.data.results
                 this.setState({
                     posts,
@@ -121,7 +118,7 @@ class Home extends Component {
                                     <span className="input-group-append">
                                         <button className="btn btn-md btn-secondary m-0" 
                                                 onClick={this.onSearch}
-                                                type="button"><i class="fas fa-search"></i></button>
+                                                type="button"><i className="fas fa-search"></i></button>
                                     </span>
                                 </div>
                             </div>

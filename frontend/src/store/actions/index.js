@@ -2,7 +2,8 @@ export {
     login,
     loginCheckState,
     logout,
-    signup
+    signup,
+    message
 } from "./auth";
 
 export { sendNewPostToServer, listPostsToUserDashboard } from "./post";

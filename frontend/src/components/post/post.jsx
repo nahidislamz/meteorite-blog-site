@@ -7,7 +7,7 @@ const post = props => {
     return (
         <div className="card mb-4">  
             <img className="banner card-img-top" src={props.thumbnail} alt={"banner"} width="150" height="250"/>
-            <div class="card-body">
+            <div className="card-body">
                 <h2 className="card-title">
                     {props.title}
                 </h2>

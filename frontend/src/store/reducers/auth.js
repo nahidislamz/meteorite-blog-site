@@ -5,7 +5,8 @@ const initialState = {
     token: null,
     username: null,
     loading: false,
-    loginRedirectURL: "/"
+    loginRedirectURL: "/",
+    message:null
 };
 
 const authInit = (state) => {
@@ -20,6 +21,11 @@ const authLoginSuccess = (state, action) => {
     });
 };
 
+const authLoginFail = (state, action) => {
+    return updateObject(state, {
+        message:action.message
+    });
+};
 const authLogout = (state) => {
     return updateObject(state, { token: null, username: null });
 };
@@ -28,21 +34,23 @@ const userRegistrationInit = (state) => {
     return updateObject(state, { token: null, username: null, loading: true });
 };
 
-const userRegistrationSuccess = (state) => {
+const userRegistrationSuccess = (state,action) => {
     return updateObject(state, {
         token: null,
         username: null,
         loading: false,
-        loginRedirectURL: "/login"
+        loginRedirectURL: "/login",
+        message:action.message
     });
 };
 
-const userRegistrationFail = (state) => {
+const userRegistrationFail = (state,action) => {
     return updateObject(state, {
         token: null,
         username: null,
         loading: false,
-        loginRedirectURL: "/"
+        loginRedirectURL: "/",
+        message:action.message
     });
 };
 
@@ -52,6 +60,8 @@ const reducer = (state = initialState, action) => {
             return authInit(state, action);
         case types.LOGIN_SUCCESS:
             return authLoginSuccess(state, action);
+        case types.LOGIN_FAIL:
+            return authLoginFail(state, action);
         case types.LOGOUT:
             return authLogout(state, action);
         case types.SIGNUP_INIT:
