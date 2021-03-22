@@ -6,12 +6,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('auth/', include('rest_auth.urls')),
-    path('auth/registration/', include('rest_auth.registration.urls')),
-    #path("auth/password/reset/", include('rest_auth.urls'),name='rest_password_reset'),
-    #path("auth/password/reset/confirm/", include('rest_auth.urls'),name='rest_password_reset_confirm'),
-
     path("accounts/", include('accounts.urls')),
     path("blog/", include('blog.urls')),
     path("meteorite_admin/", include('meteorite_admin.urls')),

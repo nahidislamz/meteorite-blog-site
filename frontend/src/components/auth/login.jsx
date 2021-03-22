@@ -9,7 +9,7 @@ class Login extends Component {
     constructor(props){
         super(props)
         this.state = {
-            username:"",
+            email:"",
             password:"",
         }
     }
@@ -17,16 +17,16 @@ class Login extends Component {
     loginHandler = event => {
         event.preventDefault();
         const loginInfo = {
-            username: this.state.username,
+            email: this.state.email,
             password: this.state.password
         };
         this.props.onAuthLogin(loginInfo);
        
     };
 
-    onUsernameChange = (event) =>{
+    onEmailChange = (event) =>{
         this.setState({
-            username:event.target.value
+            email:event.target.value
         })
     }
     onPasswordChange = (event) =>{
@@ -41,11 +41,11 @@ class Login extends Component {
                 <h1 className="h1-responsive text-center mb-4">Login</h1>
                 <form onSubmit={this.loginHandler}>
                         <div className="form-group mb-3">
-                            <input type="text" className="form-control" placeholder="Your Username *" 
-                            value={this.state.username} onChange={this.onUsernameChange} />
+                            <input type="email" className="form-control" placeholder="Your Email *"  required
+                            value={this.state.email} onChange={this.onEmailChange} />
                         </div>
                         <div className="form-group mb-3">
-                            <input type="password" className="form-control" placeholder="Your Password *" 
+                            <input type="password" className="form-control" placeholder="Your Password *" required
                             value={this.state.password} onChange={this.onPasswordChange} />
                         </div>
                         <div className="form-group mb-3">

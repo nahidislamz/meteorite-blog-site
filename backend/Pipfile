@@ -4,8 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django-rest-auth = "*"
-djangorestframework-jwt = "*"
 django-allauth = "*"
 openapi-codec = "*"
 django = "*"
@@ -16,6 +14,8 @@ psycopg2 = "*"
 psycopg2-binary = "*"
 sqlparse = "*"
 django-environ = "*"
+django-rest-auth = "*"
+djangorestframework-jwt = "*"
 
 [dev-packages]
 

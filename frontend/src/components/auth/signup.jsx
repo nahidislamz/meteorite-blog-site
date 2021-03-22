@@ -15,8 +15,8 @@ class SignUp extends Component {
             last_name:"",
             email:"",
             username:"",
-            password:"",
-            password1:"",  
+            password1:"",
+            password2:"",  
         }
     }
 
@@ -27,8 +27,8 @@ class SignUp extends Component {
             last_name: this.state.last_name,
             email: this.state.email,
             username: this.state.username,
-            password: this.state.password,
-            password1:this.state.password1,
+            password1: this.state.password1,
+            password2:this.state.password2,
         };
         this.props.onSignUp(
             signupdata,
@@ -57,12 +57,12 @@ class SignUp extends Component {
     }
     onPasswordChange = (event) =>{
         this.setState({
-            password:event.target.value
+            password1:event.target.value
         })
     }
     onPasswordConfirmChange= (event) =>{
         this.setState({
-            password1:event.target.value
+            password2:event.target.value
         })
     }
     render() {
@@ -104,13 +104,13 @@ class SignUp extends Component {
                                     <div className="col-md-6">
                                         <div className="form-group mb-3">
                                             <input type="password" className="form-control" placeholder="Password *" 
-                                            value={this.state.password} onChange={this.onPasswordChange} />
+                                            value={this.state.password1} onChange={this.onPasswordChange} />
                                         </div>
                                     </div>
                                     <div className="col-md-6">
                                         <div className="form-group mb-3">
                                             <input type="password" className="form-control" placeholder="Confirm Password *" 
-                                            value={this.state.password1} onChange={this.onPasswordConfirmChange} />
+                                            value={this.state.password2} onChange={this.onPasswordConfirmChange} />
                                         </div>
                                     </div>
                                 </div>

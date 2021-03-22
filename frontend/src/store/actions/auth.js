@@ -33,7 +33,7 @@ export const logout = () => {
 export const login = (loginCredentials) => {
     return dispatch => {
         dispatch(loginInit());
-        AxiosInstance.post("auth/login/", loginCredentials)
+        AxiosInstance.post("/accounts/login/", loginCredentials)
             .then(response => {
                 
                 const expirationDate = new Date(
