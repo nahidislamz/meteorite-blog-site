@@ -82,9 +82,9 @@ def post_update_view(request):
 
         updated_data = request.data
         instance = Post.objects.get(slug=updated_data.get('slug'))
-        admin_user = User.objects.get(pk=1)  # PK Of Admin User Is 1
-        author = user.pk
-        if(instance.author == user or user == admin_user):
+
+        #admin_user = User.objects.get(pk=1)  # PK Of Admin User Is 1
+        if(user):
             updated_data.pop('slug')
             serializer = PostUpdateSerializer(instance, data=updated_data)
 

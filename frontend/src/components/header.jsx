@@ -8,7 +8,7 @@ const Header = props => {
 
     const logout=()=>{
         actions.logout();
-        window.location.reload();
+        window.location.replace('/')
     }
 
     return (

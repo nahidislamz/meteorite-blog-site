@@ -4,7 +4,9 @@ import AxiosInstance from "../../AxiosInstance";
 import Aux from "../../hoc/Aux/Aux";
 import * as actions from "../../store/actions/index";
 import { withRouter } from "react-router-dom";
+import {Link} from "react-router-dom";
 var select="Select"
+
 class PostEdit extends Component {
 
     constructor(props){
@@ -55,6 +57,14 @@ class PostEdit extends Component {
             thumbnail:event.target.files[0],
         })
     }
+    resetForm(){
+        this.setState({
+            title:  "",
+            body:"",
+            thumbnail: null,
+            category:""
+        })
+    }
 
     onFormSubmitEventHandler = event => {
         event.preventDefault();
@@ -80,9 +90,13 @@ class PostEdit extends Component {
         if (this.state) {
             form = (
                 <Aux>
-                    <h1 className="text-center py-3 display-4 pt-5 mt-5">
-                        Edit Post
-                    </h1>
+                    <nav aria-label="breadcrumb mt-5 pt-5">
+                        <ol class="breadcrumb mt-5">
+                            <li class="breadcrumb-item"><Link to="/dashboard/post-list">Dashboard</Link></li>
+                            <li class="breadcrumb-item active" aria-current="page">Posts-Edit</li>
+                            <li class="breadcrumb-item active" aria-current="page">{this.state.title}</li>
+                        </ol>
+                    </nav>
                     <form onSubmit={this.onFormSubmitEventHandler}>
                     <div className="form-group mb-3">
                             <input type="text" id="title" className="form-control" placeholder="Title" 
@@ -129,7 +143,7 @@ class PostEdit extends Component {
         return this.props.loading ? (
             <p className="text-center mt-5">Loading...</p>
         ) : (
-            <div className="container mt-5 px-3">{form}</div>
+            <div className="container mt-5 py-3 px-3">{form}</div>
         );
     }
 }

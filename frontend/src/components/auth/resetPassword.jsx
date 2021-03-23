@@ -69,10 +69,7 @@ class ResetPassword extends Component {
 const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
-        isAuth: state.auth.token !== null,
-        loginRedirectURL: state.auth.loginRedirectURL,
         message:state.auth.message,
-   
     };
 };
 

@@ -74,7 +74,7 @@ class PostList extends Component {
                                 id={post.slug}
                                 className="btn px-2 btn-sm btn-danger"
                                 onClick={this.postDeleteHandler}>
-                                    <i class="fas fa-trash-alt"></i>
+                                    <i className="fas fa-trash-alt"></i>
                             </button>
                         </td>
                   </tr>

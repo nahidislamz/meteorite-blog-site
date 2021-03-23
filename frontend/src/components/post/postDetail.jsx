@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter ,Link} from "react-router-dom";
 import { connect } from "react-redux";
 import AxiosInstance from "../../AxiosInstance";
 import Aux from "../../hoc/Aux/Aux";
@@ -62,6 +62,13 @@ class PostDetails extends Component {
             postBody = (
                 <Aux>
                     <div className="container mt-5 py-5" style={{padding:'130px'}}>
+                        <nav aria-label="breadcrumb mt-2 pt-5">
+                            <ol class="breadcrumb mt-1">
+                                <li class="breadcrumb-item"><Link to="/">Home</Link></li>
+                                <li class="breadcrumb-item active" aria-current="page">Posts-Details</li>
+                                <li class="breadcrumb-item active" aria-current="page">{this.state.postBody.title}</li>
+                            </ol>
+                        </nav>
                         <div className="row">
                             <div className="col-md-12">
                                 <h1 className="h1-responsive mt-4">{this.state.postBody.title}</h1>

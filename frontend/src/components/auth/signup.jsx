@@ -17,6 +17,7 @@ class SignUp extends Component {
             username:"",
             password1:"",
             password2:"",  
+           
         }
     }
 
@@ -34,6 +35,7 @@ class SignUp extends Component {
             signupdata,
             this.props.history.push
         );
+       
     };
     onFirstNameChange = (event) =>{
         this.setState({
@@ -65,11 +67,12 @@ class SignUp extends Component {
             password2:event.target.value
         })
     }
+
     render() {
         let message=<div></div>
         if(this.props.message){
             message = <div className="alert alert-danger" role="alert">
-                            {this.props.message}
+                            {this.props.message}                          
                       </div>
         }
         return (
@@ -82,47 +85,72 @@ class SignUp extends Component {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="text" className="form-control" placeholder="First Name" 
-                                    value={this.state.first_name} onChange={this.onFirstNameChange} />
+                                    <input type="text" 
+                                    className="form-control" 
+                                    placeholder="First Name" 
+                                    value={this.state.first_name} 
+                                    onChange={this.onFirstNameChange} 
+                                    required/>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="text" className="form-control" placeholder="Last Name" 
-                                    value={this.state.last_name} onChange={this.onLastNameChange} />
+                                    <input type="text" 
+                                    className="form-control" 
+                                    placeholder="Last Name" 
+                                    value={this.state.last_name} 
+                                    onChange={this.onLastNameChange} 
+                                    required/>
                                 </div>
                             </div>
                         </div>
                     
                         <div className="form-group mb-3">
-                            <input type="email" className="form-control" placeholder="Email *" 
-                            value={this.state.email} onChange={this.onEmailChange} />
+                            <input type="email" 
+                            className="form-control" 
+                            placeholder="Email *" 
+                            value={this.state.email} 
+                            onChange={this.onEmailChange} 
+                            required/>
                         </div>
                         <div className="form-group mb-3">
-                            <input type="text" className="form-control" placeholder="Username *" 
-                            value={this.state.username} onChange={this.onUsernameChange} />
+                            <input type="text" 
+                            className="form-control" 
+                            placeholder="Username *" 
+                            value={this.state.username} 
+                            onChange={this.onUsernameChange} 
+                            required/>
                         </div>
 
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="password" className="form-control" placeholder="Password *" 
-                                    value={this.state.password1} onChange={this.onPasswordChange} />
+                                    <input type="password" className="form-control" 
+                                    placeholder="Password *" 
+                                    value={this.state.password1} 
+                                    onChange={this.onPasswordChange} 
+                                    required/>
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group mb-3">
-                                    <input type="password" className="form-control" placeholder="Confirm Password *" 
-                                    value={this.state.password2} onChange={this.onPasswordConfirmChange} />
+                                    <input type="password" 
+                                    className="form-control" 
+                                    placeholder="Confirm Password *" 
+                                    value={this.state.password2}
+                                    onChange={this.onPasswordConfirmChange} 
+                                    required/>
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-group mb-3">
-                            <input type="submit" className="btnSubmit" value="Register" />
+                            <input type="submit" 
+                            id="button"
+                            className="btnSubmit" value="Register"/>
                         </div>
                         <div className="form-group mb-3 text-center">
-                            <NavLink to="/" className="ForgetPwd px-3">Forget Password?</NavLink>
+                            <NavLink to="/accounts/reset-password" className="ForgetPwd px-3">Forget Password?</NavLink>
                             Don't have any account? <NavLink to="/login"className="ForgetPwd">Login</NavLink>
                         </div>
                     </form>

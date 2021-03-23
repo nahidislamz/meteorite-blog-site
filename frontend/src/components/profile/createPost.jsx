@@ -44,7 +44,18 @@ class CreatePost extends Component {
             }
         };
         this.props.onCreateNewPost(data, config);
+        this.resetForm();
+        window.location.replace('/dashboard/post-list')
     };
+
+    resetForm(){
+        this.setState({
+            title:  "",
+            body:"",
+            thumbnail: null,
+            category:""
+        })
+    }
 
     handleChange = (event) => {
         this.setState({
@@ -72,17 +83,27 @@ class CreatePost extends Component {
                     </h1>
                     <form onSubmit={this.onFormSubmitEventHandler}>
                         <div className="form-group mb-3">
-                            <input type="text" id="title" className="form-control" placeholder="Title" 
-                            value={this.state.title} onChange={this.handleChange} />
+                            <input type="text" id="title" 
+                                    className="form-control" 
+                                    placeholder="Title" 
+                                    value={this.state.title} 
+                                    onChange={this.handleChange} 
+                                    maxLength = "50"
+                                    required/>
                         </div>
                        
                         <div className="form-group mb-3">
-                            <textarea rows="10"  id="body" className="form-control" placeholder="Write Your Content Here..." 
-                            value={this.state.body} onChange={this.handleChange} />
+                            <textarea rows="10"  id="body" 
+                            className="form-control" 
+                            placeholder="Write Your Content Here..." 
+                            value={this.state.body} 
+                            onChange={this.handleChange} 
+                            required/>
                         </div>
                         <div className="form-group mb-3">
                             <label htmlFor="file">Thumbnail</label>
                             <input 
+                                required
                                 id="file"
                                 accept="image/png,image/jpeg"
                                 className="form-control-file"
@@ -93,6 +114,7 @@ class CreatePost extends Component {
                             <p className="py-1">Pick Your Category: </p>
                             {
                                 <select 
+                                    required
                                     className="mb-2 browser-default custom-select" 
                                     id="category" 
                                     onChange={this.handleChange} 
