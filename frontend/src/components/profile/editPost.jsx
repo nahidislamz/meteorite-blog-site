@@ -42,7 +42,7 @@ class PostEdit extends Component {
             
         )
         .catch(err => console.log("Error From PostDetail.js", err));
-        console.log(this.state.category)
+        
         this.getTagsList();
     }
 
